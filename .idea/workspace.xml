@@ -4,17 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/JsonReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Project.java" afterDir="false" />
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Repository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Commit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/ModFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/RepoFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/JsonReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/JsonReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Release.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Project.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +60,9 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -72,11 +77,35 @@
       <workItem from="1682073275026" duration="910000" />
       <workItem from="1682074247995" duration="739000" />
       <workItem from="1682078119891" duration="3527000" />
-      <workItem from="1682082664188" duration="2412000" />
+      <workItem from="1682082664188" duration="2902000" />
+      <workItem from="1682528557971" duration="1557000" />
+      <workItem from="1682579981139" duration="143000" />
+      <workItem from="1682607072340" duration="5925000" />
+      <workItem from="1682696626296" duration="3396000" />
+      <workItem from="1682700137135" duration="169000" />
+      <workItem from="1682957153026" duration="4400000" />
+      <workItem from="1683036665698" duration="167000" />
+      <workItem from="1683038852634" duration="3354000" />
+      <workItem from="1683099650302" duration="5625000" />
+      <workItem from="1683111632795" duration="16892000" />
+      <workItem from="1683183936871" duration="807000" />
+      <workItem from="1683201457089" duration="1935000" />
     </task>
+    <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
+      <created>1682085782487</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682085782487</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release" />
+    <option name="LAST_COMMIT_MESSAGE" value="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release" />
   </component>
 </project>

@@ -37,13 +37,15 @@ public class JiraDao {
      */
     public List<Release> getReleases() throws IOException {
         String url = BASE_URL + project.toString() + "/version?orderBy=releaseDate&status=released";
-        JSONObject json = JsonReader.readJsonFromUrl(url);
+        JSONObject json = JsonReader.readJsonFromUrl(url, false);
         JSONArray versions = json.getJSONArray("values");
 
         Gson gson = new Gson();
         List<Release> releases = new ArrayList<>();
         for(int i = 0; i < versions.length(); i++) {
-            releases.add(gson.fromJson(versions.get(i).toString(), Release.class));
+            Release release = gson.fromJson(versions.get(i).toString(), Release.class);
+            release.setVersionNumber(i + 1);
+            releases.add(release);
         }
         return releases;
     }
