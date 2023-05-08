@@ -1,7 +1,7 @@
 package it.lucafalasca.dao;
 
 import com.google.gson.Gson;
-import it.lucafalasca.JsonReader;
+import it.lucafalasca.util.JsonReader;
 import it.lucafalasca.entities.Commit;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.entities.ModFile;

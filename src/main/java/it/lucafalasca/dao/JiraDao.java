@@ -1,7 +1,7 @@
 package it.lucafalasca.dao;
 
 import com.google.gson.Gson;
-import it.lucafalasca.JsonReader;
+import it.lucafalasca.util.JsonReader;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.enumerations.Project;
 import org.json.JSONArray;
@@ -21,7 +21,7 @@ public class JiraDao {
     /*
      * Base URL for Jira API
      */
-    private final String BASE_URL = "https://issues.apache.org/jira/rest/api/2/project/";
+    private static final String BASE_URL = "https://issues.apache.org/jira/rest/api/2/project/";
 
     /*
      * Constructor

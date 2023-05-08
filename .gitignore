@@ -37,3 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /src/main/resources/token_auth_github.json
+/src/main/resources/csv_files/*

@@ -1,5 +1,7 @@
-package it.lucafalasca;
+package it.lucafalasca.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,86 +9,71 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Scanner;
 
 public class JsonReader {
+
+    private static final Logger logger = LogManager.getLogger(JsonReader.class);
+
+    private JsonReader() {
+    }
     public static JSONObject readJsonFromUrl(String url, boolean auth) throws IOException, JSONException {
-        URL urlOb = new URL(url);
-        URLConnection uc = urlOb.openConnection();
+        URLConnection uc = new URL(url).openConnection();
         if(auth) {
             String[] cred = getAuthFromJsonFile();
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode((cred[0] + ":" + cred[1]).getBytes()));
             uc.setRequestProperty("Authorization", basicAuth);
         }
-        InputStream is = uc.getInputStream();
 
-        try {
+        try (InputStream is = uc.getInputStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
             return new JSONObject(jsonText);
-        }catch (Exception e){
-            System.out.println("Error in json reader");
+        } catch (Exception e) {
+            logger.info(String.format("Errore nella lettura del file json da url: %s %s", url, e.getMessage()));
             e.printStackTrace();
             return null;
-        } finally {
-            is.close();
         }
     }
 
     public static JSONArray readJsonArrayFromUrl(String url, boolean auth) throws IOException, JSONException {
-        URL urlOb = new URL(url);
-
-        URLConnection uc = urlOb.openConnection();
+        URLConnection uc = new URL(url).openConnection();
         if(auth) {
             String[] cred = getAuthFromJsonFile();
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode((cred[0] + ":" + cred[1]).getBytes()));
             uc.setRequestProperty("Authorization", basicAuth);
         }
-        InputStream is = uc.getInputStream();
 
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        try (InputStream is = uc.getInputStream()) {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
-            JSONArray json = new JSONArray(jsonText);
-            return json;
-        } finally {
-            is.close();
+            return new JSONArray(jsonText);
         }
     }
 
     public static JSONArray readJsonArrayFromFile(String path) throws IOException, JSONException {
-        String jsonString = "";
-        File file = new File(path);
-        Scanner scanner = new Scanner(file);
-
-
-        while (scanner.hasNextLine()) {
-            String riga = scanner.nextLine();
-            jsonString += riga + "\n";
-        }
-
-        scanner.close();
-        JSONArray json = new JSONArray(jsonString);
-        return json;
+        return new JSONArray(readStringFromFile(path));
     }
 
     public static JSONObject readJsonObjectFromFile(String path) throws IOException, JSONException {
-        String jsonString = "";
+        return new JSONObject(readStringFromFile(path));
+    }
+
+    private static String readStringFromFile(String path) throws IOException, JSONException {
+        StringBuilder string = new StringBuilder();
         File file = new File(path);
         Scanner scanner = new Scanner(file);
 
 
         while (scanner.hasNextLine()) {
             String riga = scanner.nextLine();
-            jsonString += riga + "\n";
+            string.append(riga);
         }
 
         scanner.close();
-        JSONObject json = new JSONObject(jsonString);
-        return json;
+        return string.toString();
     }
 
     private static String readAll(Reader rd) throws IOException {
