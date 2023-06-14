@@ -35,29 +35,30 @@ public class JiraDao {
      * Get all releases of a project
      * @return a list of releases
      */
-    public List<Release> getReleases() throws IOException {
+    public List<Release> getReleases(LocalDate finalDate) throws IOException {
         String url = BASE_URL + project.toString() + "/version?orderBy=releaseDate&status=released";
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
+        assert json != null;
         JSONArray versions = json.getJSONArray("values");
 
         Gson gson = new Gson();
         List<Release> releases = new ArrayList<>();
         for(int i = 0; i < versions.length(); i++) {
             Release release = gson.fromJson(versions.get(i).toString(), Release.class);
-            release.setVersionNumber(i + 1);
-            releases.add(release);
+            if(!(release.getReleaseDate() == null || release.getReleaseDate().equals("null"))) {
+                release.setVersionNumber(i + 1);
+                releases.add(release);
+                if(finalDate != null && LocalDate.parse(release.getReleaseDate()).isAfter(finalDate.minusDays(1))){
+                    release.setReleaseDate(finalDate.toString());
+                    break;
+                }
+            }
         }
         return releases;
     }
 
-    /*
-     * Get all releases of a project between two dates
-     * @param startDate the start date
-     * @param endDate the end date
-     * @return a list of releases
-     */
-    public List<Release> getReleases(LocalDate startDate, LocalDate endDate) {
-        // TODO
-        return null;
+    public List<Release> getReleases() throws IOException {
+        return getReleases(null);
     }
+
 }

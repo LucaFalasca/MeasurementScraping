@@ -1,7 +1,6 @@
 package it.lucafalasca.enumerations;
 
 import java.time.LocalDate;
-import java.time.Month;
 
 public enum Project {
     BOOKKEEPER("BOOKKEEPER"),
@@ -19,7 +18,7 @@ public enum Project {
     public LocalDate getFinalDate(){
         switch (this){
             case BOOKKEEPER:
-                return LocalDate.of(2017, Month.NOVEMBER, 10);
+                return LocalDate.of(2017, 6, 16);
             case AVRO:
                 return LocalDate.now();
             default:

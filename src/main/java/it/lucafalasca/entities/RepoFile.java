@@ -26,4 +26,8 @@ public class RepoFile {
     public String getUrl() {
         return url;
     }
+
+    public void setPath(String value) {
+        this.path = value;
+    }
 }

@@ -1,6 +1,5 @@
 package it.lucafalasca;
 
-import com.google.gson.Gson;
 import it.lucafalasca.dao.GithubDao;
 import it.lucafalasca.dao.JiraDao;
 import it.lucafalasca.entities.Commit;
@@ -8,11 +7,9 @@ import it.lucafalasca.entities.ModFile;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Project;
-import org.json.JSONArray;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
@@ -21,13 +18,19 @@ public class Repository {
     private JiraDao jiraDao;
     private LocalDate finalDate;
     private List<Commit> commits;
+    private Project project;
 
     private List<Release> releases;
 
     public Repository(Project project) {
+        this.project = project;
         this.githubDao = new GithubDao(project);
         this.jiraDao = new JiraDao(project);
         this.finalDate = project.getFinalDate();
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     public LocalDate getFinalDate() {
@@ -75,6 +78,12 @@ public class Repository {
     public List<Release> getReleases() throws IOException {
         if(releases == null)
             releases = jiraDao.getReleases();
+        return releases;
+    }
+
+    public List<Release> getReleases(LocalDate finalDate) throws IOException {
+        if(releases == null)
+            releases = jiraDao.getReleases(finalDate);
         return releases;
     }
 
