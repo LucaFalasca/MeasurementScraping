@@ -27,4 +27,16 @@ public class JsonMerger {
             fileWriter.write(string);
         }
     }
+
+    public static String addAttrInJsonObjectString(String jsonObjectString, String key, String value){
+        jsonObjectString = jsonObjectString.substring(0, jsonObjectString.length() - 1);
+        StringBuilder bld = new StringBuilder();
+        bld.append(jsonObjectString);
+        bld.append(",\"");
+        bld.append(key);
+        bld.append("\": \"");
+        bld.append(value);
+        bld.append("\"}");
+        return bld.toString();
+    }
 }

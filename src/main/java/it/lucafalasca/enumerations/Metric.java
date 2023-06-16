@@ -3,7 +3,8 @@ package it.lucafalasca.enumerations;
 public enum Metric {
     RELEASE("Release"),
     CLASS("Class"),
-    LOC("LOC");
+    LOC("LOC"),
+    NUM_IF("Num IF");
 
     private final String name;
 

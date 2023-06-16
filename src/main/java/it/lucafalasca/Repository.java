@@ -1,16 +1,20 @@
 package it.lucafalasca;
 
+import com.google.gson.Gson;
 import it.lucafalasca.dao.GithubDao;
 import it.lucafalasca.dao.JiraDao;
-import it.lucafalasca.entities.Commit;
-import it.lucafalasca.entities.ModFile;
-import it.lucafalasca.entities.Release;
-import it.lucafalasca.entities.RepoFile;
+import it.lucafalasca.entities.*;
 import it.lucafalasca.enumerations.Project;
+import it.lucafalasca.util.JsonReader;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Repository {
 
@@ -20,6 +24,10 @@ public class Repository {
     private List<Commit> commits;
     private Project project;
 
+    private Gson gson;
+
+    private Map<Integer, List<ClassContent>> classContentHash;
+
     private List<Release> releases;
 
     public Repository(Project project) {
@@ -27,6 +35,8 @@ public class Repository {
         this.githubDao = new GithubDao(project);
         this.jiraDao = new JiraDao(project);
         this.finalDate = project.getFinalDate();
+        this.gson = new Gson();
+        this.classContentHash = new HashMap<>();
     }
 
     public Project getProject() {
@@ -39,6 +49,19 @@ public class Repository {
 
     public List<RepoFile> getClasses(String shaTree) throws IOException {
         return githubDao.getClasses(shaTree);
+    }
+
+    public List<ClassContent> getClassesContent(int releaseNumber) throws IOException {
+        if(!classContentHash.containsKey(releaseNumber)){
+            JSONArray j = JsonReader.readJsonArrayFromFile("src/main/resources/json_files/" + project.toString() + "_classes/CLASSES_" + project.toString() + "_RELEASE_" + releaseNumber + ".json");
+            List<ClassContent> classesContent = new ArrayList<>();
+            for (int i = 0; i < j.length(); i++) {
+                JSONObject classObject = j.getJSONObject(i);
+                classesContent.add(gson.fromJson(classObject.toString(), ClassContent.class));
+            }
+            classContentHash.put(releaseNumber, classesContent);
+        }
+        return classContentHash.get(releaseNumber);
     }
 
     public String getTreeUrlFromDate(LocalDate date) throws IOException {

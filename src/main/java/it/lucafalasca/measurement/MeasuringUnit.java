@@ -7,7 +7,7 @@ import it.lucafalasca.enumerations.Project;
 
 import java.util.Map;
 
-public interface MeasuringUnit {
+public interface MeasuringUnit<T> {
 
     public Project project = Project.BOOKKEEPER;
     public Map<Metric, String> getMetrics();
@@ -23,4 +23,6 @@ public interface MeasuringUnit {
     public MeasuringUnit addMetrics(Metric... metrics);
 
     public void setMetricValue(Metric metric, String value);
+
+    public void calculateMetric(Metric metric, T input);
 }

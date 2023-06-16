@@ -3,12 +3,13 @@ package it.lucafalasca.measurement;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
+import it.lucafalasca.measurement.metrics.IfMetric;
 import it.lucafalasca.measurement.metrics.LocMetric;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MeasuringUnitConcrete implements MeasuringUnit{
+public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
     private Release release;
     private RepoFile repoClass;
 
@@ -45,9 +46,11 @@ public class MeasuringUnitConcrete implements MeasuringUnit{
         for(Metric metric : metrics) {
             switch (metric) {
                 case LOC:
-                    return new LocMetric(measuringUnit);
-                default:
-                    return this;
+                    measuringUnit = new LocMetric(measuringUnit);
+                    break;
+                case NUM_IF:
+                    measuringUnit =  new IfMetric(measuringUnit);
+                    break;
             }
         }
         return measuringUnit;
@@ -65,6 +68,11 @@ public class MeasuringUnitConcrete implements MeasuringUnit{
             default:
                 break;
         }
+    }
+
+    @Override
+    public void calculateMetric(Metric metric, T input) {
+        // do nothing
     }
 
     @Override
