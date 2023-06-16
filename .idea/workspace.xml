@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="#3 - Advanced framework for interaction with jira and github &#10;#4 - Interaction queries for data retrieve">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/CsvHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Refactor generale">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/JsonReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/JsonReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/IfMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/IfMetric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +17,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
       </list>
@@ -51,6 +47,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -89,7 +86,19 @@
       <workItem from="1683201457089" duration="3079000" />
       <workItem from="1683206405545" duration="2314000" />
       <workItem from="1683297488912" duration="30000" />
-      <workItem from="1683550873998" duration="4369000" />
+      <workItem from="1683550873998" duration="4678000" />
+      <workItem from="1683575987990" duration="2938000" />
+      <workItem from="1683625177611" duration="7186000" />
+      <workItem from="1683641219215" duration="3973000" />
+      <workItem from="1683908216051" duration="3051000" />
+      <workItem from="1684496215325" duration="16463000" />
+      <workItem from="1686123560843" duration="6000" />
+      <workItem from="1686210993940" duration="33000" />
+      <workItem from="1686312807216" duration="198000" />
+      <workItem from="1686726769632" duration="3492000" />
+      <workItem from="1686822875527" duration="2000" />
+      <workItem from="1686903522727" duration="6402000" />
+      <workItem from="1686914409976" duration="18559000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -105,15 +114,69 @@
       <option name="project" value="LOCAL" />
       <updated>1683203581410</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="#5 - Aggiunta la posssibilità di creare file csv">
+      <created>1683555546685</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683555546685</updated>
+    </task>
+    <task id="LOCAL-00004" summary="#5 - Update">
+      <created>1686727761808</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1686727761808</updated>
+    </task>
+    <task id="LOCAL-00005" summary="#5 - Update pom for sonarcloud">
+      <created>1686731164633</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1686731164633</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactor generale">
+      <created>1686931710737</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1686931710738</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release" />
     <MESSAGE value="#3 - Advanced framework for interaction with jira and github &#10;#4 - Interaction queries for data retrieve" />
-    <option name="LAST_COMMIT_MESSAGE" value="#3 - Advanced framework for interaction with jira and github &#10;#4 - Interaction queries for data retrieve" />
+    <MESSAGE value="#5 - Aggiunta la posssibilità di creare file csv" />
+    <MESSAGE value="#5 - Update" />
+    <MESSAGE value="#5 - Update pom for sonarcloud" />
+    <MESSAGE value="Refactor generale" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor generale" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/LocMetric.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

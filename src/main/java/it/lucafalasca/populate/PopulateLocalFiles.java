@@ -84,19 +84,22 @@ public class PopulateLocalFiles {
                         for (ModFile modFile : modFiles) {
                             if (modFile.getFilename().equals(mu.getRepoClass().getPath())) {
                                 mu.calculateMetric(Metric.LOC, modFile);
-                                /*
-                                String t = mu.getValueFromMetric(Metric.LOC);
-                                int currentLoc = Integer.parseInt(t);
-                                currentLoc += modFile.getAdditions() - modFile.getDeletions();
-                                mu.setMetricValue(Metric.LOC, String.valueOf(currentLoc));
-                                 */
+
+//                                String t = mu.getValueFromMetric(Metric.LOC);
+//                                int currentLoc = Integer.parseInt(t);
+//                                currentLoc += modFile.getAdditions() - modFile.getDeletions();
+//                                mu.setMetricValue(Metric.LOC, String.valueOf(currentLoc));
+
                             }
                         }
+                        int c = 0;
                         for(ClassContent classContent : classContentList){
                             if(classContent.getPath().equals(mu.getRepoClass().getPath())) {
-                                //System.out.println(Decode.decodeBase64(classContent.getContent()));
+                                c++;
+                                mu.calculateMetric(Metric.NUM_IF, classContent);
                             }
                         }
+                        System.out.println(c);
                     }
                 }
 
