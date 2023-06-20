@@ -7,7 +7,6 @@ import it.lucafalasca.enumerations.Project;
 import it.lucafalasca.measurement.MeasuringUnit;
 import it.lucafalasca.measurement.MeasuringUnitConcrete;
 import it.lucafalasca.util.CsvHandler;
-import it.lucafalasca.util.Decode;
 import it.lucafalasca.util.JsonMerger;
 import it.lucafalasca.util.JsonReader;
 
@@ -70,7 +69,12 @@ public class PopulateLocalFiles {
                 List<String> jsonClasses = new ArrayList<>();
                 for (RepoFile c : classes) {
                     MeasuringUnit mu = new MeasuringUnitConcrete(r, c);
-                    mu = mu.addMetrics(Metric.LOC, Metric.NUM_IF);
+                    mu = mu.addMetrics(Metric.LOC,
+                            Metric.IF,
+                            Metric.IMPORT,
+                            Metric.CHANGES,
+                            Metric.SEMICOLON,
+                            Metric.COMMIT);
                     measuringUnits.add(mu);
                 }
                 System.out.println("Classes (" + classes.size() + ") ");
@@ -84,6 +88,9 @@ public class PopulateLocalFiles {
                         for (ModFile modFile : modFiles) {
                             if (modFile.getFilename().equals(mu.getRepoClass().getPath())) {
                                 mu.calculateMetric(Metric.LOC, modFile);
+                                mu.calculateMetric(Metric.CHANGES, modFile);
+                                mu.calculateMetric(Metric.COMMIT, 1);
+
 
 //                                String t = mu.getValueFromMetric(Metric.LOC);
 //                                int currentLoc = Integer.parseInt(t);
@@ -92,14 +99,13 @@ public class PopulateLocalFiles {
 
                             }
                         }
-                        int c = 0;
                         for(ClassContent classContent : classContentList){
                             if(classContent.getPath().equals(mu.getRepoClass().getPath())) {
-                                c++;
-                                mu.calculateMetric(Metric.NUM_IF, classContent);
+                                mu.calculateMetric(Metric.IF, classContent);
+                                mu.calculateMetric(Metric.IMPORT, classContent);
+                                mu.calculateMetric(Metric.SEMICOLON, classContent);
                             }
                         }
-                        System.out.println(c);
                     }
                 }
 
@@ -109,7 +115,11 @@ public class PopulateLocalFiles {
                             metrics.get(Metric.RELEASE),
                             metrics.get(Metric.CLASS),
                             metrics.get(Metric.LOC),
-                            metrics.get(Metric.NUM_IF)});
+                            metrics.get(Metric.IF),
+                            metrics.get(Metric.IMPORT),
+                            metrics.get(Metric.CHANGES),
+                            metrics.get(Metric.SEMICOLON),
+                            metrics.get(Metric.COMMIT)});
                 }
 
 

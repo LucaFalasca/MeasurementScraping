@@ -3,8 +3,7 @@ package it.lucafalasca.measurement;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
-import it.lucafalasca.measurement.metrics.IfMetric;
-import it.lucafalasca.measurement.metrics.LocMetric;
+import it.lucafalasca.measurement.metrics.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +47,22 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
                 case LOC:
                     measuringUnit = new LocMetric(measuringUnit);
                     break;
-                case NUM_IF:
+                case IF:
                     measuringUnit =  new IfMetric(measuringUnit);
+                    break;
+                case IMPORT:
+                    measuringUnit = new ImportMetric(measuringUnit);
+                    break;
+                case CHANGES:
+                    measuringUnit = new ChangesMetric(measuringUnit);
+                    break;
+                case SEMICOLON:
+                    measuringUnit = new SemicolonMetric(measuringUnit);
+                    break;
+                case COMMIT:
+                    measuringUnit = new CommitMetric(measuringUnit);
+                    break;
+                default:
                     break;
             }
         }
@@ -88,4 +101,5 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
         }
         return metricsMap;
     }
+
 }

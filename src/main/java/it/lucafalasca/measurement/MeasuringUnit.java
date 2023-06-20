@@ -25,4 +25,5 @@ public interface MeasuringUnit<T> {
     public void setMetricValue(Metric metric, String value);
 
     public void calculateMetric(Metric metric, T input);
+
 }

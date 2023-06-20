@@ -4,7 +4,11 @@ public enum Metric {
     RELEASE("Release"),
     CLASS("Class"),
     LOC("LOC"),
-    NUM_IF("Num IF");
+    IF("IF"),
+    IMPORT("Import"),
+    CHANGES("Changes"),
+    SEMICOLON("Semicolon"),
+    COMMIT("Commit");
 
     private final String name;
 

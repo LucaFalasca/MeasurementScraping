@@ -36,6 +36,7 @@ public class GithubDao {
         do {
             long startTime1 = System.currentTimeMillis();
             url = GITHUB_URL + project.toString() + "/commits?per_page=100&page=" + page;
+            System.out.println(url);
             if(startDate != null)
                 url += "&since=" + startDate.toString();
             if(endDate != null){

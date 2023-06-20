@@ -71,4 +71,5 @@ public abstract class AbstractMetric<T> implements MeasuringUnit<T> {
     }
 
     public abstract void calculateMetric(T input);
+
 }

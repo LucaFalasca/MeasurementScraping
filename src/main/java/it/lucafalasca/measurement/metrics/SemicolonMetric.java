@@ -6,18 +6,15 @@ import it.lucafalasca.measurement.MeasuringUnit;
 import it.lucafalasca.util.Count;
 import it.lucafalasca.util.Decode;
 
-public class IfMetric extends AbstractMetric<ClassContent>{
+public class SemicolonMetric extends AbstractMetric<ClassContent>{
 
-    public IfMetric(MeasuringUnit component) {
-        super(component, Metric.IF, "0");
+    public SemicolonMetric(MeasuringUnit component) {
+        super(component, Metric.SEMICOLON, "0");
     }
 
     @Override
     public void calculateMetric(ClassContent input) {
         String content = Decode.decodeBase64(input.getContent());
-        metricValue = String.valueOf(Count.contaOccorrenze(content, "if(") + Count.contaOccorrenze(content, "if ("));
-
+        metricValue = String.valueOf(Count.contaOccorrenze(content, ";"));
     }
-
-
 }
