@@ -34,6 +34,7 @@ public class PopulateLocalFiles {
             System.out.println(treeUrl + "?recursive=1");
             List<RepoFile> classes = repository.getClasses(treeUrl);
             List<String> jsonClasses = new ArrayList<>();
+
             for (RepoFile c : classes) {
                 String jsonClass = JsonReader.readJsonFromUrl(c.getUrl(), true).toString();
                 jsonClass = JsonMerger.addAttrInJsonObjectString(jsonClass, "path", c.getPath());
@@ -51,7 +52,7 @@ public class PopulateLocalFiles {
         List<Release> releases;
         try {
             releases = repository.getReleases(repository.getFinalDate());
-            LocalDate startRelease = null;
+            LocalDate startRelease = LocalDate.of(1990, 10, 10);
             LocalDate endRelease = null;
 
             for (Release r : releases) {
@@ -80,6 +81,7 @@ public class PopulateLocalFiles {
                 System.out.println("Classes (" + classes.size() + ") ");
                 endRelease = LocalDate.parse(r.getReleaseDate());
                 List<Commit> commits = repository.getCommits(startRelease, endRelease);
+                List<Ticket> tickets = repository.getTickets(startRelease, endRelease);
                 startRelease = endRelease;
                 for (Commit commit : commits) {
                     List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
@@ -133,5 +135,10 @@ public class PopulateLocalFiles {
         finally {
             CsvHandler.writeCsv("DATASET_" + repository.getProject(), columNames, data);
         }
+    }
+
+    public static void tickets() throws IOException {
+        Repository repository = new Repository(Project.BOOKKEEPER);
+        System.out.println(repository.getTickets(null, null));
     }
 }

@@ -1,6 +1,7 @@
 package it.lucafalasca.dao;
 
 import com.google.gson.Gson;
+import it.lucafalasca.entities.Ticket;
 import it.lucafalasca.util.JsonReader;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.enumerations.Project;
@@ -62,5 +63,23 @@ public class JiraDao {
     }
 
 
+    public List<Ticket> getTickets(LocalDate startRelease, LocalDate endRelease) throws IOException {
+        String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%27bookkeeper%27AND'issueType'='Bug'AND('status'='closed'OR'status'='resolved')AND'resolution'='fixed'&fields=key&maxResults=1000&fields=fixVersions,issuetype,resolutiondate,created,versions";
+        System.out.println(url);
+        JSONObject json = JsonReader.readJsonFromUrl(url, false);
+        assert json != null;
+        JSONArray issues = json.getJSONArray("issues");
 
+        Gson gson = new Gson();
+        List<Ticket> tickets = new ArrayList<>();
+        for(int i = 0; i < issues.length(); i++) {
+            Ticket ticket = gson.fromJson(issues.get(i).toString(), Ticket.class);
+            LocalDate resolutionDate = LocalDate.parse(ticket.getFields().getResolutiondate().substring(0, 10));
+            if (resolutionDate.isAfter(startRelease) && resolutionDate.isBefore(endRelease))
+                tickets.add(ticket);
+
+
+        }
+        return tickets;
+    }
 }

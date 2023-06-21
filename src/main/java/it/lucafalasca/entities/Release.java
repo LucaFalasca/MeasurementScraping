@@ -86,7 +86,7 @@ public class Release {
 
     @Override
     public String toString() {
-        return "Release{" +
+        return "Release{\n\t" +
                 "self='" + self + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +

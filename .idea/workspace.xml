@@ -4,20 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Aggiunta IfMetric">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ChangesMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/CommitMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ImportMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/SemicolonMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/Count.java" afterDir="false" />
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Aggiunte delle metriche">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Fields.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/IssueType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Ticket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/GithubDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Repository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Metric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Metric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnitConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnitConcrete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/AbstractMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/AbstractMetric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/IfMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/IfMetric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Release.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,6 +68,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="it.lucafalasca.entities" />
       <recent name="it.lucafalasca.measurement.metrics" />
     </key>
   </component>
@@ -115,7 +111,8 @@
       <workItem from="1686822875527" duration="2000" />
       <workItem from="1686903522727" duration="6402000" />
       <workItem from="1686914409976" duration="18872000" />
-      <workItem from="1687267469661" duration="6827000" />
+      <workItem from="1687267469661" duration="8538000" />
+      <workItem from="1687349208059" duration="11992000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -166,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686933777341</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Aggiunte delle metriche">
+      <created>1687276633349</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1687276633349</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +195,8 @@
     <MESSAGE value="#5 - Update pom for sonarcloud" />
     <MESSAGE value="Refactor generale" />
     <MESSAGE value="Aggiunta IfMetric" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta IfMetric" />
+    <MESSAGE value="Aggiunte delle metriche" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunte delle metriche" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
