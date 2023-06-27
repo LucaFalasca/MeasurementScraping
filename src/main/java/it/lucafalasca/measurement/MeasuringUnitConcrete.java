@@ -42,7 +42,7 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
 
     @Override
     public MeasuringUnit addMetrics(Metric... metrics) {
-        MeasuringUnit<T> measuringUnit = this;
+        MeasuringUnit measuringUnit = this;
         for(Metric metric : metrics) {
             switch (metric) {
                 case CHURN:

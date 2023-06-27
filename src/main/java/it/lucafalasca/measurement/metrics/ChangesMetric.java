@@ -6,7 +6,7 @@ import it.lucafalasca.measurement.MeasuringUnit;
 
 public class ChangesMetric extends AbstractMetric<ModFile>{
 
-    public ChangesMetric(MeasuringUnit component) {
+    public ChangesMetric(MeasuringUnit<ModFile> component) {
         super(component, Metric.CHANGES, "0");
     }
 
