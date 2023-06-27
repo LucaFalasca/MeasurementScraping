@@ -70,12 +70,18 @@ public class PopulateLocalFiles {
                 List<String> jsonClasses = new ArrayList<>();
                 for (RepoFile c : classes) {
                     MeasuringUnit mu = new MeasuringUnitConcrete(r, c);
-                    mu = mu.addMetrics(Metric.LOC,
+                    mu = mu.addMetrics(Metric.CHURN,
+                            Metric.LOC,
                             Metric.IF,
                             Metric.IMPORT,
                             Metric.CHANGES,
                             Metric.SEMICOLON,
-                            Metric.COMMIT);
+                            Metric.COMMIT,
+                            Metric.COMMENT,
+                            Metric.PUBLIC,
+                            Metric.PRIVATE,
+                            Metric.PROTECTED,
+                            Metric.BUGGYNESS);
                     measuringUnits.add(mu);
                 }
                 System.out.println("Classes (" + classes.size() + ") ");
@@ -89,16 +95,9 @@ public class PopulateLocalFiles {
                     for (MeasuringUnit mu : measuringUnits) {
                         for (ModFile modFile : modFiles) {
                             if (modFile.getFilename().equals(mu.getRepoClass().getPath())) {
-                                mu.calculateMetric(Metric.LOC, modFile);
+                                mu.calculateMetric(Metric.CHURN, modFile);
                                 mu.calculateMetric(Metric.CHANGES, modFile);
                                 mu.calculateMetric(Metric.COMMIT, 1);
-
-
-//                                String t = mu.getValueFromMetric(Metric.LOC);
-//                                int currentLoc = Integer.parseInt(t);
-//                                currentLoc += modFile.getAdditions() - modFile.getDeletions();
-//                                mu.setMetricValue(Metric.LOC, String.valueOf(currentLoc));
-
                             }
                         }
                         for(ClassContent classContent : classContentList){
@@ -106,6 +105,11 @@ public class PopulateLocalFiles {
                                 mu.calculateMetric(Metric.IF, classContent);
                                 mu.calculateMetric(Metric.IMPORT, classContent);
                                 mu.calculateMetric(Metric.SEMICOLON, classContent);
+                                mu.calculateMetric(Metric.LOC, classContent);
+                                mu.calculateMetric(Metric.COMMENT, classContent);
+                                mu.calculateMetric(Metric.PUBLIC, classContent);
+                                mu.calculateMetric(Metric.PRIVATE, classContent);
+                                mu.calculateMetric(Metric.PROTECTED, classContent);
                             }
                         }
                     }
@@ -113,15 +117,11 @@ public class PopulateLocalFiles {
 
                 for (MeasuringUnit mu : measuringUnits) {
                     Map<Metric, String> metrics = mu.getMetrics();
-                    data.add(new String[]{
-                            metrics.get(Metric.RELEASE),
-                            metrics.get(Metric.CLASS),
-                            metrics.get(Metric.LOC),
-                            metrics.get(Metric.IF),
-                            metrics.get(Metric.IMPORT),
-                            metrics.get(Metric.CHANGES),
-                            metrics.get(Metric.SEMICOLON),
-                            metrics.get(Metric.COMMIT)});
+                    String[] singleData = new String[Metric.values().length];
+                    for(Metric metric: Metric.values()){
+                        singleData[metric.ordinal()] = metrics.get(metric);
+                    }
+                    data.add(singleData);
                 }
 
 

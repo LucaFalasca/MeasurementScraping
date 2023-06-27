@@ -5,6 +5,7 @@ import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
 import it.lucafalasca.measurement.metrics.*;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,11 +42,11 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
 
     @Override
     public MeasuringUnit addMetrics(Metric... metrics) {
-        MeasuringUnit measuringUnit = this;
+        MeasuringUnit<T> measuringUnit = this;
         for(Metric metric : metrics) {
             switch (metric) {
-                case LOC:
-                    measuringUnit = new LocMetric(measuringUnit);
+                case CHURN:
+                    measuringUnit = new ChurnMetric(measuringUnit);
                     break;
                 case IF:
                     measuringUnit =  new IfMetric(measuringUnit);
@@ -61,6 +62,24 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
                     break;
                 case COMMIT:
                     measuringUnit = new CommitMetric(measuringUnit);
+                    break;
+                case LOC:
+                    measuringUnit = new LocMetric(measuringUnit);
+                    break;
+                case COMMENT:
+                    measuringUnit = new CommentMetric(measuringUnit);
+                    break;
+                case PUBLIC:
+                    measuringUnit = new PublicMetric(measuringUnit);
+                    break;
+                case PRIVATE:
+                    measuringUnit = new PrivateMetric(measuringUnit);
+                    break;
+                case PROTECTED:
+                    measuringUnit = new ProtectedMetric(measuringUnit);
+                    break;
+                case BUGGYNESS:
+                    measuringUnit = new BuggynessMetric(measuringUnit);
                     break;
                 default:
                     break;
@@ -95,7 +114,7 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
 
     @Override
     public Map<Metric, String> getMetrics(Metric... metrics) {
-        Map<Metric, String> metricsMap = new HashMap<>();
+        Map<Metric, String> metricsMap = new EnumMap<>(Metric.class);
         for(Metric m: metrics) {
             metricsMap.put(m, getValueFromMetric(m));
         }

@@ -3,12 +3,19 @@ package it.lucafalasca.enumerations;
 public enum Metric {
     RELEASE("Release"),
     CLASS("Class"),
+    CHURN("Churn"),
     LOC("LOC"),
     IF("IF"),
     IMPORT("Import"),
     CHANGES("Changes"),
     SEMICOLON("Semicolon"),
-    COMMIT("Commit");
+    COMMENT("Comment"),
+    PUBLIC("Public"),
+    PRIVATE("Private"),
+    PROTECTED("Protected"),
+    COMMIT("Commit"),
+
+    BUGGYNESS("Buggyness");
 
     private final String name;
 
