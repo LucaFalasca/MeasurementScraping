@@ -110,7 +110,7 @@ public class Repository {
         return releases;
     }
 
-    public List<Ticket> getTickets(LocalDate startRelease, LocalDate endRelease) throws IOException {
-        return jiraDao.getTickets(startRelease, endRelease);
+    public List<Ticket> getBugTickets(LocalDate startRelease, LocalDate endRelease) throws IOException {
+        return jiraDao.getBugTickets(startRelease, endRelease);
     }
 }

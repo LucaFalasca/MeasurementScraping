@@ -25,4 +25,15 @@ public enum Project {
                 return null;
         }
     }
+
+    public static Project getProjectByName(String name){
+        switch (name){
+            case "BOOKKEEPER":
+                return BOOKKEEPER;
+            case "AVRO":
+                return AVRO;
+            default:
+                return null;
+        }
+    }
 }

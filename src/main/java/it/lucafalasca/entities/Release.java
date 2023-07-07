@@ -96,4 +96,13 @@ public class Release {
                 ", projectId='" + projectId + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Release) {
+            Release release = (Release) obj;
+            return this.id.equals(release.getId());
+        }
+        return false;
+    }
 }

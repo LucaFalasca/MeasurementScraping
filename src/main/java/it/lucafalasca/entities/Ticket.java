@@ -4,6 +4,17 @@ public class Ticket {
     private String key;
     private Fields fields;
 
+
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setFields(Fields fields) {
+        this.fields = fields;
+    }
+
+
     public Ticket(String key, Fields fields) {
         this.key = key;
         this.fields = fields;
@@ -19,7 +30,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{\n" +
+        return "Ticket{" +
                 "key='" + key + '\'' +
                 ", fields=" + fields +
                 '}';

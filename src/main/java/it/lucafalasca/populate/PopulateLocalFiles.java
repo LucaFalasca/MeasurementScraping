@@ -87,7 +87,7 @@ public class PopulateLocalFiles {
                 System.out.println("Classes (" + classes.size() + ") ");
                 endRelease = LocalDate.parse(r.getReleaseDate());
                 List<Commit> commits = repository.getCommits(startRelease, endRelease);
-                List<Ticket> tickets = repository.getTickets(startRelease, endRelease);
+                List<Ticket> tickets = repository.getBugTickets(startRelease, endRelease);
                 startRelease = endRelease;
                 for (Commit commit : commits) {
                     List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
@@ -139,6 +139,6 @@ public class PopulateLocalFiles {
 
     public static void tickets() throws IOException {
         Repository repository = new Repository(Project.BOOKKEEPER);
-        System.out.println(repository.getTickets(null, null));
+        System.out.println(repository.getBugTickets(null, null));
     }
 }

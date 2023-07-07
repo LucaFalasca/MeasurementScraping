@@ -13,6 +13,16 @@ public class Fields {
 
     private String resolutiondate;
 
+    private ProjectJira project;
+
+    public ProjectJira getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectJira project) {
+        this.project = project;
+    }
+
     public String getCreated() {
         return created;
     }
