@@ -92,9 +92,9 @@ public class JiraDao {
 
         int startAt = 0;
         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project%20in%20(" + projectsString + ")%20AND%20issuetype%20=%20Bug%20AND%20status%20in%20(Resolved,%20Closed)%20AND%20resolution%20in%20(Fixed,%20Done,%20Resolved)%20AND%20affectedVersion%20in%20releasedVersions()%20AND%20fixVersion%20in%20releasedVersions()%20%20&maxResults=1000&fields=fixVersions,issuetype,created,versions,project&startAt=" + startAt;
-
+        System.out.println(url);
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
-        System.out.println(json);
+        //System.out.println(json);
         assert json != null;
         String total = json.get("total").toString();
 
@@ -116,7 +116,7 @@ public class JiraDao {
                 tickets.add(ticket);
             }
         }
-        System.out.println(tickets);
+        //System.out.println(tickets);
         return tickets;
 
 

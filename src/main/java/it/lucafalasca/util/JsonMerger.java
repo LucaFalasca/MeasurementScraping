@@ -1,5 +1,6 @@
 package it.lucafalasca.util;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +24,11 @@ public class JsonMerger {
 
     public static void writeStringOnFile(String fileName, String string) throws IOException {
         String path = "src/main/resources/json_files/" + fileName + ".json";
+        String directoryPath = path.substring(0, path.lastIndexOf("/"));
+        File directory = new File(directoryPath);
+        if(!directory.exists())
+            if(!directory.mkdirs())
+                throw new IOException("Cannot create directory " + directoryPath);
         try(FileWriter fileWriter = new FileWriter(path)) {
             fileWriter.write(string);
         }

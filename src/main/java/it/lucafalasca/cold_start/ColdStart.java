@@ -20,13 +20,13 @@ public class ColdStart {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
     public static void coldStart() throws IOException {
         JiraDao jiraDao = new JiraDao(Project.BOOKKEEPER);
-        Project[] projects = new Project[]{Project.BOOKKEEPER, Project.AVRO};
+        Project[] projects = Project.getAllProjects();
 
-        Map<Project, List<Release>> ProjectReleases = new HashMap<>();
+        Map<Project, List<Release>> projectReleases = new HashMap<>();
         for(Project project : projects){
             Repository repository = new Repository(project);
             List<Release> releases = repository.getReleases();
-            ProjectReleases.put(project, releases);
+            projectReleases.put(project, releases);
         }
 
         List<Ticket> tickets = jiraDao.getBugTickets(projects);
@@ -34,7 +34,6 @@ public class ColdStart {
         int c = 0;
         float sum = 0;
         for (Ticket ticket : tickets) {
-
             Fields fields = ticket.getFields();
 
             Project project = Project.getProjectByName(fields.getProject().getKey());
@@ -45,25 +44,25 @@ public class ColdStart {
             if(fixVersion == null){
                 continue;
             }
-            fixVersion.setVersionNumber(getVersionNumberFromRelease(ProjectReleases.get(project), fixVersion));
+            fixVersion.setVersionNumber(getVersionNumberFromRelease(projectReleases.get(project), fixVersion));
 
             List<Release> affectedVersions = fields.getVersions();
             Release injectedVersion = minVersion(affectedVersions);
             if(injectedVersion == null){
                 continue;
             }
-            injectedVersion.setVersionNumber(getVersionNumberFromRelease(ProjectReleases.get(project), injectedVersion));
+            injectedVersion.setVersionNumber(getVersionNumberFromRelease(projectReleases.get(project), injectedVersion));
 
 
 
-            Release openingVersion = getReleaseFromDate(ProjectReleases.get(project), LocalDate.parse(fields.getCreated().substring(0, 10)));
+            Release openingVersion = getReleaseFromDate(projectReleases.get(project), LocalDate.parse(fields.getCreated().substring(0, 10)));
 
             int fixVersionNumber = fixVersion.getVersionNumber();
             int injectedVersionNumber = injectedVersion.getVersionNumber();
             int openingVersionNumber = openingVersion.getVersionNumber();
 
 
-            if(!(fixVersionNumber <= openingVersionNumber || fixVersionNumber <= injectedVersionNumber || injectedVersionNumber >= openingVersionNumber)){
+            if(!(fixVersionNumber <= openingVersionNumber || fixVersionNumber <= injectedVersionNumber || injectedVersionNumber > openingVersionNumber)){
                 c++;
                 float p = (fixVersionNumber - injectedVersionNumber)/(fixVersionNumber - openingVersionNumber);
                 sum += p;

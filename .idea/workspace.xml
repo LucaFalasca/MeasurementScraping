@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Finite le metriche">
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="token">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/CommitDescr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pValue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/cold_start/ColdStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/cold_start/ColdStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Commit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/Commit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/ModFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/entities/ModFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/JsonMerger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/JsonMerger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/JsonReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/JsonReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +40,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2OjU1LgGry1E8gWimPqHOIUodJQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -41,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -48,10 +59,12 @@
     "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -64,6 +77,16 @@
       <recent name="it.lucafalasca.entities" />
       <recent name="it.lucafalasca.measurement.metrics" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-20.0.2-azul-20.0.2-4caba194b151-ffffd64d" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -108,6 +131,9 @@
       <workItem from="1687349208059" duration="12429000" />
       <workItem from="1687872070338" duration="8174000" />
       <workItem from="1706696473400" duration="535000" />
+      <workItem from="1706697014352" duration="734000" />
+      <workItem from="1706697780441" duration="5189000" />
+      <workItem from="1706709489414" duration="14854000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -172,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1687362844283</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="token">
+      <option name="closed" value="true" />
+      <created>1706697164342</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1706697164342</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,17 +234,7 @@
     <MESSAGE value="Aggiunte delle metriche" />
     <MESSAGE value="Aggiunto lo scraping dei ticket" />
     <MESSAGE value="Finite le metriche" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finite le metriche" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ChurnMetric.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="token" />
+    <option name="LAST_COMMIT_MESSAGE" value="token" />
   </component>
 </project>

@@ -98,7 +98,7 @@ public class JsonReader {
 
 
     private static String[] getAuthFromJsonFile() throws IOException {
-        String path = "src\\main\\resources\\token_auth_github.json";
+        String path = "src/main/resources/token_auth_github.json";
         return getAuthFromJsonFile(path);
     }
 }

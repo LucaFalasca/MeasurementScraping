@@ -27,4 +27,12 @@ public class ModFile {
     public int getChanges() {
         return changes;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ModFile)) {
+            return false;
+        }
+        return filename.equals(((ModFile) o).getFilename());
+    }
 }
