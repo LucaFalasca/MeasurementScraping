@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Finite le metriche">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/BuggynessMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ChurnMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/CommentMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/PrivateMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ProtectedMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/PublicMetric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Metric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Metric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnitConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/MeasuringUnitConcrete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ChangesMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/ChangesMetric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/LocMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/measurement/metrics/LocMetric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,13 +30,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
-    </option>
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2OjU1LgGry1E8gWimPqHOIUodJQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -60,6 +47,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -119,6 +107,7 @@
       <workItem from="1687267469661" duration="8538000" />
       <workItem from="1687349208059" duration="12429000" />
       <workItem from="1687872070338" duration="8174000" />
+      <workItem from="1706696473400" duration="535000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
