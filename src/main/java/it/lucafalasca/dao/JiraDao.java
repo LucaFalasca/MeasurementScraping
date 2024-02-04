@@ -64,7 +64,7 @@ public class JiraDao {
 
 
     public List<Ticket> getBugTickets(LocalDate startRelease, LocalDate endRelease) throws IOException {
-        String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%27bookkeeper%27AND'issueType'='Bug'AND('status'='closed'OR'status'='resolved')AND'resolution'='fixed'&fields=key&maxResults=1000&fields=fixVersions,issuetype,resolutiondate,created,versions";
+        String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%27" + project.toString() +"%27AND'issueType'='Bug'AND('status'='closed'OR'status'='resolved')AND'resolution'='fixed'&fields=key&maxResults=1000&fields=fixVersions,issuetype,resolutiondate,created,versions";
         System.out.println(url);
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
         assert json != null;
@@ -83,7 +83,7 @@ public class JiraDao {
         return tickets;
     }
 
-    public List<Ticket> getBugTickets(Project[] projects) throws IOException {
+    public static List<Ticket> getBugTickets(Project[] projects) throws IOException {
         String projectsString = "";
         for(Project project : projects){
             projectsString += project.toString() + ",";

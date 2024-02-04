@@ -1,0 +1,3 @@
+Dato che ci sono alcune release in cui le classi vengono cambiate di path, per considerarle comunque ai fini dell'injected version
+considirerò una classe univocamente dal nome e non dall'intero path, andando a trascurare i casi in cui ci sono due classi diverse
+con lo stesso nome in due path diversi, dato che sono meno rilevanti a livello statistico

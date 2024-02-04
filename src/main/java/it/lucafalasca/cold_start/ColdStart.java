@@ -19,7 +19,6 @@ public class ColdStart {
 
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
     public static void coldStart() throws IOException {
-        JiraDao jiraDao = new JiraDao(Project.BOOKKEEPER);
         Project[] projects = Project.getAllProjects();
 
         Map<Project, List<Release>> projectReleases = new HashMap<>();
@@ -29,7 +28,7 @@ public class ColdStart {
             projectReleases.put(project, releases);
         }
 
-        List<Ticket> tickets = jiraDao.getBugTickets(projects);
+        List<Ticket> tickets = JiraDao.getBugTickets(projects);
         System.out.println("Number of tickets: " + tickets.size());
         int c = 0;
         float sum = 0;
@@ -74,7 +73,7 @@ public class ColdStart {
         System.out.println("Mean: " + mean);
     }
 
-    private static int getVersionNumberFromRelease(List<Release> releases, Release r) {
+    public static int getVersionNumberFromRelease(List<Release> releases, Release r) {
         for(Release release : releases){
             if(release.equals(r)){
                 return release.getVersionNumber();
@@ -83,7 +82,7 @@ public class ColdStart {
         return -1;
     }
 
-    private static Release getReleaseFromDate(List<Release> releases, LocalDate releaseDate) {
+    public static Release getReleaseFromDate(List<Release> releases, LocalDate releaseDate) {
         for(int i = 0; i < releases.size() - 1; i++){
             LocalDate start = LocalDate.parse(releases.get(i).getReleaseDate());
             LocalDate end = LocalDate.parse(releases.get(i+1).getReleaseDate());
@@ -94,7 +93,7 @@ public class ColdStart {
         return releases.get(releases.size() - 1);
     }
 
-    private static Release minVersion(List<Release> releases){
+    public static Release minVersion(List<Release> releases){
         int i = 0;
         Release min = releases.get(i);
         if(min.getReleaseDate() == null){
@@ -144,6 +143,10 @@ public class ColdStart {
             }
         }
         return max;
+    }
+
+    public static int calculateInjectedVersionNumberFromP(double p, int fixVersionNumber, int openingVersionNumber){
+        return (int) (fixVersionNumber - p * (fixVersionNumber - openingVersionNumber));
     }
 
 

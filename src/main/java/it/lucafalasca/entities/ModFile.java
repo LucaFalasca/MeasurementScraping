@@ -1,5 +1,7 @@
 package it.lucafalasca.entities;
 
+import java.util.*;
+
 public class ModFile {
 
     private String filename;
@@ -7,6 +9,18 @@ public class ModFile {
     private int additions;
     private int deletions;
     private int changes;
+    private Set<Integer> affectedReleases;
+
+    public ModFile(String filename, String status, int additions, int deletions, int changes) {
+        this.filename = filename;
+        this.status = status;
+        this.additions = additions;
+        this.deletions = deletions;
+        this.changes = changes;
+        this.affectedReleases = new LinkedHashSet<>();
+    }
+
+
 
     public String getFilename() {
         return filename;
@@ -30,6 +44,22 @@ public class ModFile {
 
     public int getChanges() {
         return changes;
+    }
+
+    public Set<Integer> getAffectedReleases() {
+        return affectedReleases;
+    }
+
+    public void setAffectedReleases(Set<Integer> affectedReleases) {
+        this.affectedReleases = affectedReleases;
+    }
+
+    public void addAffectedRelease(int release) {
+        affectedReleases.add(release);
+    }
+
+    public void addAffectedReleases(Set<Integer> releases) {
+        affectedReleases.addAll(releases);
     }
 
     @Override

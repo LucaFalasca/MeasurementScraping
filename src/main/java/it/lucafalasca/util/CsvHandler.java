@@ -30,4 +30,21 @@ public class CsvHandler {
         csvWriter.close();
         fileWriter.close();
     }
+
+    public static void writeCsv(String fileName, String[] columnNames, List<String []> data, LocalDateTime date) throws IOException {
+
+        String filePath = BASE_PATH + fileName + "_" + date.format(formatter) + ".csv";
+        File file = new File(filePath);
+        FileWriter fileWriter = new FileWriter(file, false);
+        CSVWriter csvWriter = new CSVWriter(fileWriter);
+
+        csvWriter.writeNext(columnNames);
+        for (String[] line : data) {
+            String[] formattedLine = Arrays.copyOf(line, columnNames.length);
+            csvWriter.writeNext(formattedLine);
+        }
+
+        csvWriter.close();
+        fileWriter.close();
+    }
 }

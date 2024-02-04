@@ -1,6 +1,7 @@
 package it.lucafalasca.populate;
 
 import it.lucafalasca.Repository;
+import it.lucafalasca.cold_start.ColdStart;
 import it.lucafalasca.entities.*;
 import it.lucafalasca.enumerations.Metric;
 import it.lucafalasca.enumerations.Project;
@@ -12,6 +13,7 @@ import it.lucafalasca.util.JsonReader;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -149,92 +151,121 @@ public class PopulateLocalFiles {
         String[] columNames = Metric.getAllMetrics();
         List<String[]> data = new ArrayList<>();
         List<Release> releases;
+        LocalDateTime now = LocalDateTime.now();
         try {
             releases = repository.getReleases(repository.getFinalDate());
+            System.out.println("SIZEEE" + releases.size());
             LocalDate startRelease = LocalDate.of(1990, 10, 10);
             LocalDate endRelease = null;
-            for(int i = 0; i < releases.size(); i++) {
-                List<Release> rTemp = releases.subList(0, i + 1);
-                Collections.reverse(rTemp);
-                if (i == 2)
-                    break;
-                for (Release r : rTemp) {
-                    System.out.println("Release: " + r.getVersionNumber());
-                    System.out.println("Release Date" + r.getReleaseDate());
-                    LocalDate date = LocalDate.parse(r.getReleaseDate());
-                    String treeUrl = repository.getTreeUrlFromDate(date);
-                    System.out.println(treeUrl + "?recursive=1");
-                    List<RepoFile> classes = repository.getClasses(treeUrl);
+            List<MeasuringUnit>[] measuringUnitsOnRelease = new List[releases.size()];
+            for (Release r : releases) {
+                System.out.println("Release: " + r.getVersionNumber());
+                System.out.println("Release Date" + r.getReleaseDate());
+                LocalDate date = LocalDate.parse(r.getReleaseDate());
+                String treeUrl = repository.getTreeUrlFromDate(date);
+                System.out.println(treeUrl + "?recursive=1");
+                List<RepoFile> classes = repository.getClasses(treeUrl);
 
-                    List<MeasuringUnit> measuringUnits = new ArrayList<>();
-                    List<String> jsonClasses = new ArrayList<>();
-                    for (RepoFile c : classes) {
-                        MeasuringUnit mu = new MeasuringUnitConcrete(r, c);
-                        mu = mu.addMetrics(Metric.CHURN,
-                                Metric.LOC,
-                                Metric.IF,
-                                Metric.IMPORT,
-                                Metric.CHANGES,
-                                Metric.SEMICOLON,
-                                Metric.COMMIT,
-                                Metric.COMMENT,
-                                Metric.PUBLIC,
-                                Metric.PRIVATE,
-                                Metric.PROTECTED,
-                                Metric.BUGGYNESS);
-                        measuringUnits.add(mu);
-                    }
-                    System.out.println("Classes (" + classes.size() + ") ");
-                    endRelease = LocalDate.parse(r.getReleaseDate());
-                    List<Commit> commits = repository.getCommits(startRelease, endRelease);
-                    List<Ticket> tickets = repository.getBugTickets(startRelease, endRelease);
-                    startRelease = endRelease;
-                    for (Commit commit : commits) {
-                        List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
-                        List<ClassContent> classContentList = repository.getClassesContent(r.getVersionNumber());
-                        for (MeasuringUnit mu : measuringUnits) {
-                            for (ModFile modFile : modFiles) {
-                                if (modFile.getFilename().equals(mu.getRepoClass().getPath())) {
-                                    mu.calculateMetric(Metric.CHURN, modFile);
-                                    mu.calculateMetric(Metric.CHANGES, modFile);
-                                    mu.calculateMetric(Metric.COMMIT, 1);
-                                }
-                            }
-                            for (ClassContent classContent : classContentList) {
-                                if (classContent.getPath().equals(mu.getRepoClass().getPath())) {
-                                    mu.calculateMetric(Metric.IF, classContent);
-                                    mu.calculateMetric(Metric.IMPORT, classContent);
-                                    mu.calculateMetric(Metric.SEMICOLON, classContent);
-                                    mu.calculateMetric(Metric.LOC, classContent);
-                                    mu.calculateMetric(Metric.COMMENT, classContent);
-                                    mu.calculateMetric(Metric.PUBLIC, classContent);
-                                    mu.calculateMetric(Metric.PRIVATE, classContent);
-                                    mu.calculateMetric(Metric.PROTECTED, classContent);
-                                }
-                            }
-                        }
-                    }
+                List<MeasuringUnit> measuringUnits = new ArrayList<>();
+                List<String> jsonClasses = new ArrayList<>();
+                for (RepoFile c : classes) {
+                    MeasuringUnit mu = new MeasuringUnitConcrete(r, c);
+                    mu = mu.addMetrics(Metric.CHURN,
+                            Metric.LOC,
+                            Metric.IF,
+                            Metric.IMPORT,
+                            Metric.CHANGES,
+                            Metric.SEMICOLON,
+                            Metric.COMMIT,
+                            Metric.COMMENT,
+                            Metric.PUBLIC,
+                            Metric.PRIVATE,
+                            Metric.PROTECTED,
+                            Metric.BUGGYNESS);
+                    measuringUnits.add(mu);
+                }
+                System.out.println("Classes (" + classes.size() + ") ");
+                endRelease = LocalDate.parse(r.getReleaseDate());
+                List<Commit> commits = repository.getCommits(startRelease, endRelease);
+                List<Ticket> tickets = repository.getBugTickets(startRelease, endRelease);
 
+                for (Commit commit : commits) {
+                    List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
+                    List<ClassContent> classContentList = repository.getClassesContent(r.getVersionNumber());
                     for (MeasuringUnit mu : measuringUnits) {
-                        Map<Metric, String> metrics = mu.getMetrics();
-                        String[] singleData = new String[Metric.values().length];
-                        for (Metric metric : Metric.values()) {
-                            singleData[metric.ordinal()] = metrics.get(metric);
+                        for (ModFile modFile : modFiles) {
+                            if (modFile.getFilename().equals(mu.getRepoClass().getPath())) {
+                                mu.calculateMetric(Metric.CHURN, modFile);
+                                mu.calculateMetric(Metric.CHANGES, modFile);
+                                mu.calculateMetric(Metric.COMMIT, 1);
+                            }
                         }
-                        data.add(singleData);
+                        for (ClassContent classContent : classContentList) {
+                            if (classContent.getPath().equals(mu.getRepoClass().getPath())) {
+                                mu.calculateMetric(Metric.IF, classContent);
+                                mu.calculateMetric(Metric.IMPORT, classContent);
+                                mu.calculateMetric(Metric.SEMICOLON, classContent);
+                                mu.calculateMetric(Metric.LOC, classContent);
+                                mu.calculateMetric(Metric.COMMENT, classContent);
+                                mu.calculateMetric(Metric.PUBLIC, classContent);
+                                mu.calculateMetric(Metric.PRIVATE, classContent);
+                                mu.calculateMetric(Metric.PROTECTED, classContent);
+                            }
+                        }
                     }
                 }
-                CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE" + i+1, columNames, data);
-                data.clear();
+                measuringUnitsOnRelease[r.getVersionNumber() - 1] = measuringUnits;
+                Set<ModFile> buggedFiles = getBuggedFilesInRelease(project, r, startRelease);
+
+                if(r.getVersionNumber() > 1) {
+                    for (int i = r.getVersionNumber() - 1; i >= 0; i--) {
+                        for (MeasuringUnit mu : measuringUnitsOnRelease[i]) {
+                            for (ModFile modFile : buggedFiles) {
+                                Set<Integer> affectedReleases = modFile.getAffectedReleases();
+                                if (affectedReleases.contains(i + 1) &&
+                                        modFile.getFilename().equals(mu.getRepoClass().getPath())) {
+                                    mu.calculateMetric(Metric.BUGGYNESS, true);
+                                }
+                            }
+                        }
+                    }
+
+                    if(r.getVersionNumber() < (releases.size() + 1) / 2 + 1) {
+                        for (int i = 0; i < r.getVersionNumber() - 1; i++) {
+                            for (MeasuringUnit mu : measuringUnitsOnRelease[i]) {
+                                Map<Metric, String> metrics = mu.getMetrics();
+                                String[] singleData = new String[Metric.values().length];
+                                for (Metric metric : Metric.values()) {
+                                    singleData[metric.ordinal()] = metrics.get(metric);
+                                }
+                                data.add(singleData);
+                            }
+                        }
+                        CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE" + r.getVersionNumber(), columNames, data, now);
+                        data.clear();
+                        startRelease = endRelease;
+                    }
+                    else if(r.getVersionNumber() == releases.size()){
+                        //Testing set
+                        for (int i = 1; i < (r.getVersionNumber() + 1) / 2 + 1; i++) {
+                            for (MeasuringUnit mu : measuringUnitsOnRelease[i]) {
+                                Map<Metric, String> metrics = mu.getMetrics();
+                                String[] singleData = new String[Metric.values().length];
+                                for (Metric metric : Metric.values()) {
+                                    singleData[metric.ordinal()] = metrics.get(metric);
+                                }
+                                data.add(singleData);
+                            }
+                        }
+                        CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_TEST", columNames, data, now);
+                        data.clear();
+                        startRelease = endRelease;
+                    }
+                }
             }
 
-
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            CsvHandler.writeCsv("DATASET_" + repository.getProject(), columNames, data);
         }
     }
 
@@ -245,10 +276,34 @@ public class PopulateLocalFiles {
             LocalDate endRelease = LocalDate.parse(release.getReleaseDate());
             List<Commit> commits = repository.getCommits(startRelease, endRelease);
             List<Ticket> tickets = repository.getBugTickets(startRelease, endRelease);
+            List<Release> releases = repository.getReleases(repository.getFinalDate());
             for (Ticket ticket : tickets) {
+                Fields fields = ticket.getFields();
+                List<Release> af = fields.getVersions();
+
+                int injectedVersionNumber = 0;
+                int fixVersionNumber = release.getVersionNumber();
+                if(af == null || af.isEmpty()){
+                    //With cold start
+                    Release openingVersion = ColdStart.getReleaseFromDate(releases, LocalDate.parse(fields.getCreated().substring(0, 10)));
+                    int openingVersionNumber = openingVersion.getVersionNumber();
+                    injectedVersionNumber = ColdStart.calculateInjectedVersionNumberFromP(1.256, fixVersionNumber, openingVersionNumber);
+                }
+                else {
+                    Release injectedVersion = ColdStart.minVersion(af);
+                    injectedVersion.setVersionNumber(ColdStart.getVersionNumberFromRelease(releases, injectedVersion));
+                    injectedVersionNumber = injectedVersion.getVersionNumber();
+                }
+                Set<Integer> affectedVersions = new LinkedHashSet<>();
+                for(int i = injectedVersionNumber; i <= fixVersionNumber; i++){
+                    affectedVersions.add(i);
+                }
                 for (Commit commit : commits) {
                     if(commit.getCommitDescr().getMessage().contains(ticket.getKey())) {
                         List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
+                        for(ModFile modFile : modFiles) {
+                            modFile.setAffectedReleases(affectedVersions);
+                        }
                         modFilesSet.addAll(modFiles);
                     }
                 }
@@ -311,6 +366,7 @@ public class PopulateLocalFiles {
             }
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 }
