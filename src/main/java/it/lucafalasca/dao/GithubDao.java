@@ -84,7 +84,11 @@ public class GithubDao {
         List<ModFile> modFiles = new ArrayList<>();
         for(int i = 0; i < modFilesJsonArray.length(); i++) {
             JSONObject modFileJsonObject = modFilesJsonArray.getJSONObject(i);
-            modFiles.add(gson.fromJson(modFileJsonObject.toString(), ModFile.class));
+            ModFile modFile = gson.fromJson(modFileJsonObject.toString(), ModFile.class);
+            if(modFile.getFilename().endsWith(".java") &&
+                    !modFile.getFilename().contains("Test") &&
+                    !modFile.getFilename().contains("package-info.java"))
+                modFiles.add(modFile);
         }
         return modFiles;
     }

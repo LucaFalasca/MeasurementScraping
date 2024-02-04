@@ -12,6 +12,10 @@ public class ModFile {
         return filename;
     }
 
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -34,5 +38,15 @@ public class ModFile {
             return false;
         }
         return filename.equals(((ModFile) o).getFilename());
+    }
+
+    @Override
+    public String toString() {
+        return filename;
+    }
+
+    @Override
+    public int hashCode() {
+        return filename.hashCode();
     }
 }

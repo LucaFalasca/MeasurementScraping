@@ -238,8 +238,8 @@ public class PopulateLocalFiles {
         }
     }
 
-    public static List<ModFile> getBuggedFilesInRelease(Project project, Release release, LocalDate startRelease) throws IOException {
-        List<ModFile> modFilesList = new ArrayList<>();
+    public static Set<ModFile> getBuggedFilesInRelease(Project project, Release release, LocalDate startRelease) throws IOException {
+        Set<ModFile> modFilesSet = new LinkedHashSet<>();
         try {
             Repository repository = new Repository(project);
             LocalDate endRelease = LocalDate.parse(release.getReleaseDate());
@@ -249,15 +249,68 @@ public class PopulateLocalFiles {
                 for (Commit commit : commits) {
                     if(commit.getCommitDescr().getMessage().contains(ticket.getKey())) {
                         List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
-                        modFilesList.addAll(modFiles);
+                        modFilesSet.addAll(modFiles);
                     }
                 }
             }
-            modFilesList = modFilesList.stream().distinct().collect(Collectors.toList());
-            return modFilesList;
+            return modFilesSet;
         }catch(IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static List<RepoFile> getFilesInRelease(Project project, Release release) throws IOException {
+        Repository repository = new Repository(project);
+        LocalDate endRelease = LocalDate.parse(release.getReleaseDate());
+        String treeUrl = repository.getTreeUrlFromDate(endRelease);
+        System.out.println(treeUrl + "?recursive=1");
+        List<RepoFile> classes = repository.getClasses(treeUrl);
+        return classes;
+    }
+
+    public static void statsOnReleases(Project project){
+        Repository repository = new Repository(project);
+        String[] columNames = Metric.getAllMetrics();
+        List<String[]> data = new ArrayList<>();
+        List<Release> releases;
+        try {
+            releases = repository.getReleases(repository.getFinalDate());
+            LocalDate startRelease = LocalDate.of(1990, 10, 10);
+            LocalDate endRelease = null;
+            for(int i = 0; i < releases.size() - 1; i++) {
+                Release r = releases.get(i);
+                Release r2 = releases.get(i + 1);
+                startRelease = LocalDate.parse(r.getReleaseDate());
+                List<RepoFile> files = PopulateLocalFiles.getFilesInRelease(project, r);
+                Set<ModFile> files2 = PopulateLocalFiles.getBuggedFilesInRelease(project, r2, startRelease);
+                System.out.println("---------RELEASE " + r.getVersionNumber() + "->" + r2.getVersionNumber() + "---------");
+                System.out.println("Classi Fixate nella release " + r2.getVersionNumber() + ": " + files2.size());
+                startRelease = LocalDate.parse(r2.getReleaseDate());
+
+                if (files2.size() == 0) {
+                    System.out.println("Nessuna classe Fixata nella release " + r2.getVersionNumber());
+                }
+                else{
+                    int classesSurvivors = 0;
+                    int renamedClasses = 0;
+                    for (RepoFile f : files) {
+                        for (ModFile m3 : files2) {
+                            if (f.getPath().equals(m3.getFilename())) {
+                                classesSurvivors++;
+                            } else if (f.getPath().substring(f.getPath().lastIndexOf("/") + 1).equals(m3.getFilename().substring(m3.getFilename().lastIndexOf("/") + 1))) {
+                                renamedClasses++;
+                            }
+                        }
+
+                    }
+                    System.out.println("Classi sopravvissute: " + classesSurvivors + "(" + (classesSurvivors / files2.size()) + "%)");
+                    System.out.println("Classi rinominate: " + renamedClasses + "(" + (renamedClasses / files2.size()) + "%)");
+                    System.out.println("Classi fixate nella release: " + (files2.size() - classesSurvivors - renamedClasses) + "(" + (files2.size() - classesSurvivors - renamedClasses) / files2.size() + "%)");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
