@@ -230,7 +230,7 @@ public class PopulateLocalFiles {
                         }
                     }
 
-                    if(r.getVersionNumber() < (releases.size() + 1) / 2 + 1) {
+                    if(r.getVersionNumber() < releases.size() / 2 + 1 + 1) {
                         for (int i = 0; i < r.getVersionNumber() - 1; i++) {
                             for (MeasuringUnit mu : measuringUnitsOnRelease[i]) {
                                 Map<Metric, String> metrics = mu.getMetrics();
@@ -256,9 +256,10 @@ public class PopulateLocalFiles {
                                 }
                                 data.add(singleData);
                             }
+                            CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE_" + releases.get(i).getVersionNumber() + "_TEST", columNames, data, now);
+                            data.clear();
                         }
-                        CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_TEST", columNames, data, now);
-                        data.clear();
+
                         startRelease = endRelease;
                     }
                 }

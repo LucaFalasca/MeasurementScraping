@@ -7,6 +7,7 @@ import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
 import it.lucafalasca.enumerations.Project;
 import it.lucafalasca.populate.PopulateLocalFiles;
+import it.lucafalasca.util.ArffMaker;
 import it.lucafalasca.util.JsonReader;
 
 import java.io.IOException;
@@ -22,11 +23,12 @@ public class Main {
         //PopulateLocalFiles.populateLocalJsonClasses(project);
 
 
-        PopulateLocalFiles.populateCSVFileV2(project);
+        //PopulateLocalFiles.populateCSVFileV2(project);
         //PopulateLocalFiles.tickets();
         //ColdStart.coldStart();
         //PopulateLocalFiles.populateCSVFile(project);
         //PopulateLocalFiles.statsOnReleases(project);
+        ArffMaker.csvToArff("src/main/resources/csv_files/DATASET_BOOKKEEPER_RELEASE_2_TEST_2024_02_05@10_53.csv");
     }
 }
 
