@@ -35,8 +35,7 @@ public class CsvHandler {
         fileWriter.close();
     }
 
-    public static void writeCsv(String fileName, String[] columnNames, List<String []> data, LocalDateTime date) throws IOException {
-
+    public static String writeCsv(String fileName, String[] columnNames, List<String []> data, LocalDateTime date) throws IOException {
         String filePath = BASE_PATH + fileName + "_" + date.format(formatter) + ".csv";
         File file = new File(filePath);
         FileWriter fileWriter = new FileWriter(file, false);
@@ -50,6 +49,7 @@ public class CsvHandler {
 
         csvWriter.close();
         fileWriter.close();
+        return filePath;
     }
 
     public static List<String[]> readCsv(String path) {

@@ -7,6 +7,7 @@ import it.lucafalasca.enumerations.Metric;
 import it.lucafalasca.enumerations.Project;
 import it.lucafalasca.measurement.MeasuringUnit;
 import it.lucafalasca.measurement.MeasuringUnitConcrete;
+import it.lucafalasca.util.ArffMaker;
 import it.lucafalasca.util.CsvHandler;
 import it.lucafalasca.util.JsonMerger;
 import it.lucafalasca.util.JsonReader;
@@ -241,7 +242,8 @@ public class PopulateLocalFiles {
                                 data.add(singleData);
                             }
                         }
-                        CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE" + r.getVersionNumber(), columNames, data, now);
+                        String path = CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE_" + r.getVersionNumber() + "_TRAIN", columNames, data, now);
+                        ArffMaker.csvToArff(path);
                         data.clear();
                         startRelease = endRelease;
                     }
@@ -256,7 +258,8 @@ public class PopulateLocalFiles {
                                 }
                                 data.add(singleData);
                             }
-                            CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE_" + releases.get(i).getVersionNumber() + "_TEST", columNames, data, now);
+                            String path = CsvHandler.writeCsv("DATASET_" + repository.getProject() + "_RELEASE_" + releases.get(i).getVersionNumber() + "_TEST", columNames, data, now);
+                            ArffMaker.csvToArff(path);
                             data.clear();
                         }
 

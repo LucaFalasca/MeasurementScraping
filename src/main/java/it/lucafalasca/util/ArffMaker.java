@@ -11,7 +11,7 @@ public class ArffMaker {
 
     public static void csvToArff(String path) throws IOException {
         System.out.println(path.lastIndexOf("/"));
-        String substring = path.substring(path.lastIndexOf("/") + 1 , path.length() - 4);
+        String substring = path.substring(path.lastIndexOf("/") + 1 , path.length() - 21);
         String filePath = ARFF_BASE_PATH + "ARFF_" + substring + ".arff";
         File file = new File(filePath);
 

@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="-">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/ArffMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" afterDir="false" />
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="arff">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/EvaluationMetric.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Experiment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/ArffMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/ArffMaker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/CsvHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/CsvHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +24,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -132,7 +134,7 @@
       <workItem from="1706709489414" duration="15187000" />
       <workItem from="1706870226088" duration="5442000" />
       <workItem from="1707053781501" duration="17774000" />
-      <workItem from="1707126790613" duration="7844000" />
+      <workItem from="1707126790613" duration="14610000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -229,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707077518864</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="arff">
+      <option name="closed" value="true" />
+      <created>1707141660094</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1707141660094</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +270,7 @@
     <MESSAGE value="token" />
     <MESSAGE value="Avanzamento" />
     <MESSAGE value="-" />
-    <option name="LAST_COMMIT_MESSAGE" value="-" />
+    <MESSAGE value="arff" />
+    <option name="LAST_COMMIT_MESSAGE" value="arff" />
   </component>
 </project>
