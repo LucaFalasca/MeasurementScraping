@@ -3,16 +3,24 @@ package it.lucafalasca.populate;
 import it.lucafalasca.Repository;
 import it.lucafalasca.cold_start.ColdStart;
 import it.lucafalasca.entities.*;
-import it.lucafalasca.enumerations.Metric;
-import it.lucafalasca.enumerations.Project;
+import it.lucafalasca.enumerations.*;
 import it.lucafalasca.measurement.MeasuringUnit;
 import it.lucafalasca.measurement.MeasuringUnitConcrete;
 import it.lucafalasca.util.ArffMaker;
 import it.lucafalasca.util.CsvHandler;
 import it.lucafalasca.util.JsonMerger;
 import it.lucafalasca.util.JsonReader;
+import it.lucafalasca.weka.Classification;
+import weka.core.converters.ConverterUtils.DataSource;
+import weka.classifiers.Classifier;
+import weka.classifiers.trees.RandomForest;
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -372,5 +380,58 @@ public class PopulateLocalFiles {
             e.printStackTrace();
 
         }
+    }
+
+    public static void doExperiments(Project project) throws Exception {
+        Classifier classifier;
+        DataSource testSource;
+        DataSource trainSource;
+        Instances train;
+        Instances test;
+        String base_path = "src/main/resources/arff_files/ARFF_DATASET_";
+        int release = 2;
+        String[] columNames = new String[]{"Project", "Release", "Experiment", "Classifier", "AUC", "Precision", "Recall", "Kappa"};
+        List<String[]> data = new ArrayList<>();
+        while(true){
+            String pathTrain = base_path + project + "_RELEASE_" + release + "_TRAIN.arff";
+            String pathTest = base_path + project + "_RELEASE_" + release + "_TEST.arff";
+            if(!(Files.exists(Path.of(pathTrain)) && Files.exists(Path.of(pathTest)))){
+                break;
+            }
+            trainSource = new DataSource(pathTrain);
+            testSource = new DataSource(pathTest);
+            train = trainSource.getDataSet();
+            test = testSource.getDataSet();
+
+            train.setClassIndex(train.numAttributes() - 1);
+            test.setClassIndex(test.numAttributes() - 1);
+
+            for (Experiment experiment : Experiment.values()) {
+                for (ClassifierSupported classifierSupported : ClassifierSupported.values()) {
+                    classifier = classifierSupported.getClassifier();
+                    Map<EvaluationMetric, Double> res = Classification.classify(train, test, classifier, experiment);
+                    System.out.println("Release:" + release + " Experiment: " + experiment + " Classifier: " + classifierSupported);
+                    System.out.println("AUC: " + res.get(EvaluationMetric.AUC));
+                    System.out.println("Precision: " + res.get(EvaluationMetric.PRECISION));
+                    System.out.println("Recall: " + res.get(EvaluationMetric.RECALL));
+                    System.out.println("Kappa: " + res.get(EvaluationMetric.KAPPA));
+                    System.out.println("-------------------------------------------------");
+                    String[] singleData = new String[columNames.length];
+                    singleData[0] = project.toString();
+                    singleData[1] = String.valueOf(release);
+                    singleData[2] = experiment.toString();
+                    singleData[3] = classifierSupported.toString();
+                    singleData[4] = String.valueOf(res.get(EvaluationMetric.AUC));
+                    singleData[5] = String.valueOf(res.get(EvaluationMetric.PRECISION));
+                    singleData[6] = String.valueOf(res.get(EvaluationMetric.RECALL));
+                    singleData[7] = String.valueOf(res.get(EvaluationMetric.KAPPA));
+                    data.add(singleData);
+                }
+            }
+
+
+            release++;
+        }
+        CsvHandler.writeCsv("EXPERIMENTS_" + project.toString(), columNames, data);
     }
 }

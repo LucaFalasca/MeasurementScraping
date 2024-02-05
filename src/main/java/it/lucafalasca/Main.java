@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Project project = Project.BOOKKEEPER;
+        Project project = Project.AVRO;
         //PopulateLocalFiles.populateLocalJsonClasses(project);
 
 
@@ -35,6 +35,13 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }*/
+
+        /*try {
+            PopulateLocalFiles.doExperiments(project);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
     }
 }
 

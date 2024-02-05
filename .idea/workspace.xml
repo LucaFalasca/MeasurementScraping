@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="arff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/EvaluationMetric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/Experiment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Weka classification">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/ClassifierSupported.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/EvaluationMetric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/EvaluationMetric.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/ArffMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/ArffMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/CsvHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/util/CsvHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +131,7 @@
       <workItem from="1706709489414" duration="15187000" />
       <workItem from="1706870226088" duration="5442000" />
       <workItem from="1707053781501" duration="17774000" />
-      <workItem from="1707126790613" duration="14610000" />
+      <workItem from="1707126790613" duration="19623000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -239,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707141660094</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Weka classification">
+      <option name="closed" value="true" />
+      <created>1707148374693</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1707148374693</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +276,17 @@
     <MESSAGE value="Avanzamento" />
     <MESSAGE value="-" />
     <MESSAGE value="arff" />
-    <option name="LAST_COMMIT_MESSAGE" value="arff" />
+    <MESSAGE value="Weka classification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Weka classification" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.io.IOException" package="java.io" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

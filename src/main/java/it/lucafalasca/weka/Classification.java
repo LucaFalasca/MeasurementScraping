@@ -21,7 +21,7 @@ import weka.filters.supervised.instance.Resample;
 import java.util.*;
 
 public class Classification {
-    public static void claffify() throws Exception {
+    private static void claffify() throws Exception {
         Classifier classifier = new RandomForest();
         DataSource testSource = new DataSource("src/main/resources/arff_files/ARFF_DATASET_BOOKKEEPER_RELEASE_2_TEST_2024_02_05@10_53.arff");
         DataSource trainSource = new DataSource("src/main/resources/arff_files/ARFF_DATASET_BOOKKEEPER_RELEASE2_2024_02_05@10_53.arff");
@@ -40,18 +40,19 @@ public class Classification {
 
     }
     //Bisogna settare il class index prima di chiamare questo metodo
-    private static Map<EvaluationMetric, Long> classify(Instances trainingSet, Instances testingSet, Classifier classifier) throws Exception {
+    private static Map<EvaluationMetric, Double> classify(Instances trainingSet, Instances testingSet, Classifier classifier) throws Exception {
         classifier.buildClassifier(trainingSet);
         Evaluation evaluation = new Evaluation(testingSet);
         evaluation.evaluateModel(classifier, testingSet);
-        Map<EvaluationMetric, Long> ret = new HashMap<>();
-        ret.put(EvaluationMetric.AUC, Math.round(evaluation.areaUnderROC(1)));
-        ret.put(EvaluationMetric.PRECISION, Math.round(evaluation.precision(1)));
-        ret.put(EvaluationMetric.RECALL, Math.round(evaluation.recall(1)));
+        Map<EvaluationMetric, Double> ret = new HashMap<>();
+        ret.put(EvaluationMetric.AUC, evaluation.areaUnderROC(1));
+        ret.put(EvaluationMetric.PRECISION, evaluation.precision(1));
+        ret.put(EvaluationMetric.RECALL, evaluation.recall(1));
+        ret.put(EvaluationMetric.KAPPA, evaluation.kappa());
         return ret;
     }
 
-    public static Map<EvaluationMetric, Long> classify(Instances trainingSet, Instances testingSet, Classifier classifier, Experiment experiment) throws Exception {
+    public static Map<EvaluationMetric, Double> classify(Instances trainingSet, Instances testingSet, Classifier classifier, Experiment experiment) throws Exception {
         switch(experiment){
             case NOTHING -> {
                 return classify(trainingSet, testingSet, classifier);
