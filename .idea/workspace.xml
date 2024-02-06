@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="Fine">
+    <list default="true" id="738e28ba-e32a-4bd9-882d-e243650a4521" name="Changes" comment="code smells">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/dao/JiraDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/ClassifierSupported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/enumerations/ClassifierSupported.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/lucafalasca/weka/Classification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +131,8 @@
       <workItem from="1707169028120" duration="1561000" />
       <workItem from="1707203065677" duration="2193000" />
       <workItem from="1707210862196" duration="17371000" />
-      <workItem from="1707235222116" duration="337000" />
+      <workItem from="1707235222116" duration="1106000" />
+      <workItem from="1707236334617" duration="2472000" />
     </task>
     <task id="LOCAL-00001" summary="#1 - Basic architecture of the project &#10;#2 - Query implementation to take release">
       <created>1682085782487</created>
@@ -256,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707155168004</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fine">
+      <option name="closed" value="true" />
+      <created>1707235742982</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1707235742982</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,17 +296,7 @@
     <MESSAGE value="Weka classification" />
     <MESSAGE value="Experiments" />
     <MESSAGE value="Fine" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fine" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/lucafalasca/populate/PopulateLocalFiles.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="code smells" />
+    <option name="LAST_COMMIT_MESSAGE" value="code smells" />
   </component>
 </project>
