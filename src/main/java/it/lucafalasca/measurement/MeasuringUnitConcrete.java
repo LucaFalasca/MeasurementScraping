@@ -1,5 +1,6 @@
 package it.lucafalasca.measurement;
 
+import it.lucafalasca.entities.ModFile;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
@@ -41,7 +42,7 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
 
     @Override
     public MeasuringUnit<T> addMetrics(Metric... metrics) {
-        MeasuringUnit<T> measuringUnit = this;
+        MeasuringUnit measuringUnit = this;
         for(Metric metric : metrics) {
             switch (metric) {
                 case CHURN:
