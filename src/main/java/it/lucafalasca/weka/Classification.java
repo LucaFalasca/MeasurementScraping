@@ -21,24 +21,9 @@ import weka.filters.supervised.instance.Resample;
 import java.util.*;
 
 public class Classification {
-    private static void claffify() throws Exception {
-        Classifier classifier = new RandomForest();
-        DataSource testSource = new DataSource("src/main/resources/arff_files/ARFF_DATASET_BOOKKEEPER_RELEASE_2_TEST_2024_02_05@10_53.arff");
-        DataSource trainSource = new DataSource("src/main/resources/arff_files/ARFF_DATASET_BOOKKEEPER_RELEASE2_2024_02_05@10_53.arff");
-        Instances train = trainSource.getDataSet();
-        Instances test = testSource.getDataSet();
-
-        train.setClassIndex(train.numAttributes() - 1);
-        test.setClassIndex(test.numAttributes() - 1);
-
-        classifier.buildClassifier(train);
-        Evaluation evaluation = new Evaluation(test);
-        evaluation.evaluateModel(classifier, test);
-        System.out.println("AUC: " + evaluation.areaUnderROC(1));
-        System.out.println("Precision: " + evaluation.precision(1));
-        System.out.println("Recall: " + evaluation.recall(1));
-
+    private Classification() {
     }
+
     //Bisogna settare il class index prima di chiamare questo metodo
     private static Map<EvaluationMetric, Double> classify(Instances trainingSet, Instances testingSet, Classifier classifier) throws Exception {
         classifier.buildClassifier(trainingSet);
@@ -87,8 +72,8 @@ public class Classification {
     private static CostMatrix getCostMatrix(double cfp, double cfn){
         CostMatrix costMatrix = new CostMatrix(2);
         costMatrix.setCell(0, 0, 0.0); //Costo true positive
-        costMatrix.setCell(1, 0, cfp); //Costo false positive
-        costMatrix.setCell(0, 1, cfn); //Costo false negative
+        costMatrix.setCell(1, 0, cfn); //Costo false positive
+        costMatrix.setCell(0, 1, cfp); //Costo false negative
         costMatrix.setCell(1, 1, 0.0); //Costo true negative
         return costMatrix;
     }

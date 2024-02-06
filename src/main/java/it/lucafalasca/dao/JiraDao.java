@@ -32,6 +32,8 @@ public class JiraDao {
         this.project = project;
     }
 
+    private static final String ISSUES = "issues";
+
     /*
      * Get all releases of a project
      * @return a list of releases
@@ -41,13 +43,22 @@ public class JiraDao {
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
         assert json != null;
         JSONArray versions = json.getJSONArray("values");
-
+        if(project == Project.BOOKKEEPER){
+            JSONArray temp = new JSONArray();
+            for(int i = 0; i < versions.length(); i++){
+                if(i != 3){
+                    temp.put(versions.get(i));
+                }
+            }
+            versions = temp;
+        }
         Gson gson = new Gson();
         List<Release> releases = new ArrayList<>();
         for(int i = 0; i < versions.length(); i++) {
             Release release = gson.fromJson(versions.get(i).toString(), Release.class);
             if(!(release.getReleaseDate() == null || release.getReleaseDate().equals("null"))){
                 release.setVersionNumber(i + 1);
+
                 releases.add(release);
                 if(finalDate != null && LocalDate.parse(release.getReleaseDate()).isAfter(finalDate.minusDays(1))){
                     release.setReleaseDate(finalDate.toString());
@@ -68,7 +79,7 @@ public class JiraDao {
         System.out.println(url);
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
         assert json != null;
-        JSONArray issues = json.getJSONArray("issues");
+        JSONArray issues = json.getJSONArray(ISSUES);
 
         Gson gson = new Gson();
         List<Ticket> tickets = new ArrayList<>();
@@ -98,7 +109,7 @@ public class JiraDao {
         assert json != null;
         String total = json.get("total").toString();
 
-        JSONArray issues = json.getJSONArray("issues");
+        JSONArray issues = json.getJSONArray(ISSUES);
 
         Gson gson = new Gson();
         List<Ticket> tickets = new ArrayList<>();
@@ -110,7 +121,7 @@ public class JiraDao {
         for (int i = 1000; i < Integer.parseInt(total); i += 1000){
             startAt = i;
             json = JsonReader.readJsonFromUrl(url, false);
-            issues = json.getJSONArray("issues");
+            issues = json.getJSONArray(ISSUES);
             for(int j = 0; j < issues.length(); j++) {
                 Ticket ticket = gson.fromJson(issues.get(j).toString(), Ticket.class);
                 tickets.add(ticket);

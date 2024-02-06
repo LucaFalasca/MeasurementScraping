@@ -11,21 +11,16 @@ import it.lucafalasca.util.CsvHandler;
 import it.lucafalasca.util.JsonMerger;
 import it.lucafalasca.util.JsonReader;
 import it.lucafalasca.weka.Classification;
-import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.Classifier;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
+import weka.core.converters.ConverterUtils.DataSource;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class PopulateLocalFiles {
 
@@ -39,6 +34,8 @@ public class PopulateLocalFiles {
         List<Release> releases;
 
         releases = repository.getReleases(repository.getFinalDate());
+        System.out.println("SIZEEE" + releases.size());
+        System.out.println(releases);
         for (Release r : releases) {
             System.out.println("Release: " + r.getVersionNumber());
             System.out.println("Release Date" + r.getReleaseDate());
@@ -69,8 +66,6 @@ public class PopulateLocalFiles {
             LocalDate endRelease = null;
 
             for (Release r : releases) {
-               /* if(r.getVersionNumber() == 2)
-                    break;*/
 
                 System.out.println("Release: " + r.getVersionNumber());
                 System.out.println("Release Date" + r.getReleaseDate());
@@ -151,7 +146,7 @@ public class PopulateLocalFiles {
     }
 
     public static void tickets() throws IOException {
-        Repository repository = new Repository(Project.BOOKKEEPER);
+        Repository repository = new Repository(Project.AVRO);
         System.out.println(repository.getBugTickets(null, null));
     }
 
@@ -162,6 +157,7 @@ public class PopulateLocalFiles {
         List<Release> releases;
         LocalDateTime now = LocalDateTime.now();
         try {
+
             releases = repository.getReleases(repository.getFinalDate());
             System.out.println("SIZEEE" + releases.size());
             LocalDate startRelease = LocalDate.of(1990, 10, 10);
@@ -255,9 +251,9 @@ public class PopulateLocalFiles {
                         data.clear();
                         startRelease = endRelease;
                     }
-                    else if(r.getVersionNumber() == releases.size()){
+                    if(r.getVersionNumber() == releases.size()){
                         //Testing set
-                        for (int i = 1; i < (r.getVersionNumber() + 1) / 2 + 1; i++) {
+                        for (int i = 1; i < (releases.size()) / 2 + 1 + 1; i++) {
                             for (MeasuringUnit mu : measuringUnitsOnRelease[i]) {
                                 Map<Metric, String> metrics = mu.getMetrics();
                                 String[] singleData = new String[Metric.values().length];
@@ -295,7 +291,7 @@ public class PopulateLocalFiles {
 
                 int injectedVersionNumber = 0;
                 int fixVersionNumber = release.getVersionNumber();
-                if(af == null || af.isEmpty()){
+                if(af == null || af.isEmpty() || ColdStart.minVersion(af) == null){
                     //With cold start
                     Release openingVersion = ColdStart.getReleaseFromDate(releases, LocalDate.parse(fields.getCreated().substring(0, 10)));
                     int openingVersionNumber = openingVersion.getVersionNumber();

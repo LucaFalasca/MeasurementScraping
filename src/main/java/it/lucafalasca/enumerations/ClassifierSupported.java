@@ -20,4 +20,19 @@ public enum ClassifierSupported {
                 return null;
         }
     }
+
+
+    @Override
+    public String toString() {
+        switch (this){
+            case RANDOM_FOREST:
+                return "RandomForest";
+            case IBK:
+                return "IBK";
+            case NAIVE_BAYES:
+                return "NaiveBayes";
+            default:
+                return "";
+        }
+    }
 }
