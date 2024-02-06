@@ -8,7 +8,7 @@ import it.lucafalasca.util.Decode;
 
 public class IfMetric extends AbstractMetric<ClassContent>{
 
-    public IfMetric(MeasuringUnit component) {
+    public IfMetric(MeasuringUnit<ClassContent> component) {
         super(component, Metric.IF, "0");
     }
 

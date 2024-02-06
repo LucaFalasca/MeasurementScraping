@@ -2,7 +2,7 @@ package it.lucafalasca.entities;
 
 public class CommitDescr {
 
-    public String message;
+    private String message;
 
     public String getMessage() {
         return message;

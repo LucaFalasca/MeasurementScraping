@@ -21,7 +21,7 @@ public class Repository {
     private GithubDao githubDao;
     private JiraDao jiraDao;
     private LocalDate finalDate;
-    private List<Commit> commits;
+    private List<CommitGithub> commitGithubs;
     private Project project;
 
     private Gson gson;
@@ -68,18 +68,18 @@ public class Repository {
         return githubDao.getTreeUrlFromDate(date);
     }
 
-    public List<Commit> getCommits() throws IOException {
-        if(commits == null)
-            commits = githubDao.getCommits(null, finalDate);
-        return commits;
+    public List<CommitGithub> getCommits() throws IOException {
+        if(commitGithubs == null)
+            commitGithubs = githubDao.getCommits(null, finalDate);
+        return commitGithubs;
     }
 
-    public List<Commit> getCommits(LocalDate startDate, LocalDate endDate) throws IOException {
+    public List<CommitGithub> getCommits(LocalDate startDate, LocalDate endDate) throws IOException {
         return githubDao.getCommits(startDate, endDate);
     }
 
-    public List<ModFile> getModFilesFromCommit(Commit commit) throws IOException {
-        return githubDao.getModFilesFromCommit(commit);
+    public List<ModFile> getModFilesFromCommit(CommitGithub commitGithub) throws IOException {
+        return githubDao.getModFilesFromCommit(commitGithub);
     }
 
     public List<Release> getReleases() throws IOException {

@@ -2,7 +2,7 @@ package it.lucafalasca.dao;
 
 import com.google.gson.Gson;
 import it.lucafalasca.util.JsonReader;
-import it.lucafalasca.entities.Commit;
+import it.lucafalasca.entities.CommitGithub;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.entities.ModFile;
 import it.lucafalasca.enumerations.Project;
@@ -31,10 +31,10 @@ public class GithubDao {
         gson = new Gson();
     }
 
-    public List<Commit> getCommits(LocalDate startDate, LocalDate endDate) throws IOException {
+    public List<CommitGithub> getCommits(LocalDate startDate, LocalDate endDate) throws IOException {
         String url;
         int page = 1;
-        List<Commit> commits = new ArrayList<>();
+        List<CommitGithub> commitGithubs = new ArrayList<>();
         JSONArray commitsJsonArray;
         long tTot = 0;
         do {
@@ -54,7 +54,7 @@ public class GithubDao {
             long startTime2 = System.currentTimeMillis();
             for (int i = 0; i < commitsJsonArray.length(); i++) {
                 JSONObject commitJsonObject = commitsJsonArray.getJSONObject(i);
-                commits.add(gson.fromJson(commitJsonObject.toString(), Commit.class));
+                commitGithubs.add(gson.fromJson(commitJsonObject.toString(), CommitGithub.class));
             }
             long endTime2 = System.currentTimeMillis();
             long elapsedTime2 = endTime2 - startTime2;
@@ -71,7 +71,7 @@ public class GithubDao {
             page++;
         }while(commitsJsonArray.length() == 100);
         logger.info("Tempo totale finale: {}", tTot);
-        return commits;
+        return commitGithubs;
     }
 
     public String getTreeUrlFromDate(LocalDate date) throws IOException {
@@ -82,8 +82,8 @@ public class GithubDao {
         return tree.getString("url");
     }
 
-    public List<ModFile> getModFilesFromCommit(Commit commit) throws IOException {
-        String url = commit.getUrl();
+    public List<ModFile> getModFilesFromCommit(CommitGithub commitGithub) throws IOException {
+        String url = commitGithub.getUrl();
 
         JSONObject json = JsonReader.readJsonFromUrl(url, true);
         JSONArray modFilesJsonArray = json.getJSONArray("files");

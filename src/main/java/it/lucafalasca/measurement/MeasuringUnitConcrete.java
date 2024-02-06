@@ -6,7 +6,6 @@ import it.lucafalasca.enumerations.Metric;
 import it.lucafalasca.measurement.metrics.*;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
@@ -41,8 +40,8 @@ public class MeasuringUnitConcrete<T> implements MeasuringUnit<T>{
     }
 
     @Override
-    public MeasuringUnit addMetrics(Metric... metrics) {
-        MeasuringUnit measuringUnit = this;
+    public MeasuringUnit<T> addMetrics(Metric... metrics) {
+        MeasuringUnit<T> measuringUnit = this;
         for(Metric metric : metrics) {
             switch (metric) {
                 case CHURN:

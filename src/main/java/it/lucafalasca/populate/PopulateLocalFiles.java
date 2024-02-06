@@ -99,9 +99,9 @@ public class PopulateLocalFiles {
                 }
                 logger.info("Classes ({}) ", classes.size());
                 endRelease = LocalDate.parse(r.getReleaseDate());
-                List<Commit> commits = repository.getCommits(startRelease, endRelease);
+                List<CommitGithub> commitGithubs = repository.getCommits(startRelease, endRelease);
 
-                assignMetrics(commits, repository, measuringUnits, r);
+                assignMetrics(commitGithubs, repository, measuringUnits, r);
 
                 measuringUnitsOnRelease[r.getVersionNumber() - 1] = measuringUnits;
                 Set<ModFile> buggedFiles = getBuggedFilesInRelease(project, r, startRelease);
@@ -119,9 +119,9 @@ public class PopulateLocalFiles {
         }
     }
 
-    private static void assignMetrics(List<Commit> commits, Repository repository, List<MeasuringUnit<Object>> measuringUnits, Release r) throws IOException {
-        for (Commit commit : commits) {
-            List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
+    private static void assignMetrics(List<CommitGithub> commitGithubs, Repository repository, List<MeasuringUnit<Object>> measuringUnits, Release r) throws IOException {
+        for (CommitGithub commitGithub : commitGithubs) {
+            List<ModFile> modFiles = repository.getModFilesFromCommit(commitGithub);
             List<ClassContent> classContentList = repository.getClassesContent(r.getVersionNumber());
             for (MeasuringUnit<Object> mu : measuringUnits) {
                 calculateFileMetrics(mu, modFiles);
@@ -212,7 +212,7 @@ public class PopulateLocalFiles {
         try {
             Repository repository = new Repository(project);
             LocalDate endRelease = LocalDate.parse(release.getReleaseDate());
-            List<Commit> commits = repository.getCommits(startRelease, endRelease);
+            List<CommitGithub> commitGithubs = repository.getCommits(startRelease, endRelease);
             List<Ticket> tickets = repository.getBugTickets(startRelease, endRelease);
             List<Release> releases = repository.getReleases(repository.getFinalDate());
             for (Ticket ticket : tickets) {
@@ -236,7 +236,7 @@ public class PopulateLocalFiles {
                 for(int i = injectedVersionNumber; i <= fixVersionNumber; i++){
                     affectedVersions.add(i);
                 }
-                addAffectedReleases(affectedVersions, modFilesSet, commits, repository, ticket);
+                addAffectedReleases(affectedVersions, modFilesSet, commitGithubs, repository, ticket);
             }
             return modFilesSet;
         }catch(IOException e) {
@@ -244,10 +244,10 @@ public class PopulateLocalFiles {
         }
     }
 
-    private static void addAffectedReleases(Set<Integer> affectedVersions, Set<ModFile> modFilesSet, List<Commit> commits, Repository repository, Ticket ticket) throws IOException {
-        for (Commit commit : commits) {
-            if(commit.getCommitDescr().getMessage().contains(ticket.getKey())) {
-                List<ModFile> modFiles = repository.getModFilesFromCommit(commit);
+    private static void addAffectedReleases(Set<Integer> affectedVersions, Set<ModFile> modFilesSet, List<CommitGithub> commitGithubs, Repository repository, Ticket ticket) throws IOException {
+        for (CommitGithub commitGithub : commitGithubs) {
+            if(commitGithub.getCommitDescr().getMessage().contains(ticket.getKey())) {
+                List<ModFile> modFiles = repository.getModFilesFromCommit(commitGithub);
                 for(ModFile modFile : modFiles) {
                     modFile.setAffectedReleases(affectedVersions);
                 }

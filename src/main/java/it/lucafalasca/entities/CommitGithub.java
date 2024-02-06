@@ -1,8 +1,6 @@
 package it.lucafalasca.entities;
 
-import java.util.List;
-
-public class Commit {
+public class CommitGithub {
     private String url;
     private CommitDescr commit;
 
