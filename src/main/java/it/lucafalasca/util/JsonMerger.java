@@ -26,9 +26,8 @@ public class JsonMerger {
         String path = "src/main/resources/json_files/" + fileName + ".json";
         String directoryPath = path.substring(0, path.lastIndexOf("/"));
         File directory = new File(directoryPath);
-        if(!directory.exists())
-            if(!directory.mkdirs())
-                throw new IOException("Cannot create directory " + directoryPath);
+        if(!directory.exists() && !directory.mkdirs())
+            throw new IOException("Cannot create directory " + directoryPath);
         try(FileWriter fileWriter = new FileWriter(path)) {
             fileWriter.write(string);
         }

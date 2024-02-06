@@ -10,13 +10,13 @@ import java.util.Map;
 
 public abstract class AbstractMetric<T> implements MeasuringUnit<T> {
 
-    protected MeasuringUnit measuringUnit;
+    protected MeasuringUnit<T> measuringUnit;
     protected Repository repository;
 
     protected Metric metric;
     protected String metricValue;
 
-    protected AbstractMetric(MeasuringUnit component, Metric metric, String defaultMetricValue) {
+    protected AbstractMetric(MeasuringUnit<T> component, Metric metric, String defaultMetricValue) {
         this.measuringUnit = component;
         repository = new Repository(MeasuringUnit.project);
         this.metric = metric;
@@ -32,7 +32,7 @@ public abstract class AbstractMetric<T> implements MeasuringUnit<T> {
 
     @Override
     public String getValueFromMetric(Metric metric) {
-        if(metric == metric){
+        if(this.metric == metric){
             return metricValue;
         }else {
             return measuringUnit.getValueFromMetric(metric);
@@ -46,7 +46,7 @@ public abstract class AbstractMetric<T> implements MeasuringUnit<T> {
     }
 
     @Override
-    public MeasuringUnit addMetrics(Metric... metrics) {
+    public MeasuringUnit<T> addMetrics(Metric... metrics) {
         return measuringUnit.addMetrics(metrics);
     }
 

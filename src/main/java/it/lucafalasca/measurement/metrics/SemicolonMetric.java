@@ -8,7 +8,7 @@ import it.lucafalasca.util.Decode;
 
 public class SemicolonMetric extends AbstractMetric<ClassContent>{
 
-    public SemicolonMetric(MeasuringUnit component) {
+    public SemicolonMetric(MeasuringUnit<ClassContent> component) {
         super(component, Metric.SEMICOLON, "0");
     }
 

@@ -7,9 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.URL;
+import java.net.URI;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Scanner;
 
@@ -20,7 +21,8 @@ public class JsonReader {
     private JsonReader() {
     }
     public static JSONObject readJsonFromUrl(String url, boolean auth) throws IOException, JSONException {
-        URLConnection uc = new URL(url).openConnection();
+        URI uri = Paths.get( url).toUri() ;
+        URLConnection uc = uri.toURL().openConnection();
         if(auth) {
             String[] cred = getAuthFromJsonFile();
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode((cred[0] + ":" + cred[1]).getBytes()));
@@ -39,7 +41,8 @@ public class JsonReader {
     }
 
     public static JSONArray readJsonArrayFromUrl(String url, boolean auth) throws IOException, JSONException {
-        URLConnection uc = new URL(url).openConnection();
+        URI uri = Paths.get( url).toUri() ;
+        URLConnection uc = uri.toURL().openConnection();
         if(auth) {
             String[] cred = getAuthFromJsonFile();
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode((cred[0] + ":" + cred[1]).getBytes()));

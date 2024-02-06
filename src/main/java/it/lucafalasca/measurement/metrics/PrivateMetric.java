@@ -8,7 +8,7 @@ import it.lucafalasca.util.Decode;
 
 public class PrivateMetric extends AbstractMetric<ClassContent>{
 
-    public PrivateMetric(MeasuringUnit component) {
+    public PrivateMetric(MeasuringUnit<ClassContent> component) {
         super(component, Metric.PRIVATE, "0");
     }
 

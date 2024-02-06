@@ -9,7 +9,6 @@ public class Decode {
     }
     public static String decodeBase64(String s){
         byte[] decodedBytes = Base64.getMimeDecoder().decode(s);
-        String decodedString = new String(decodedBytes);
-        return decodedString;
+        return new String(decodedBytes);
     }
 }

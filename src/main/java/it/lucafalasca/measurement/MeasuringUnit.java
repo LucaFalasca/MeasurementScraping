@@ -20,7 +20,7 @@ public interface MeasuringUnit<T> {
 
     public String getValueFromMetric(Metric metric);
 
-    public MeasuringUnit addMetrics(Metric... metrics);
+    public MeasuringUnit<T> addMetrics(Metric... metrics);
 
     public void setMetricValue(Metric metric, String value);
 

@@ -2,6 +2,8 @@ package it.lucafalasca.util;
 
 public class Count {
 
+    private Count() {
+    }
     public static int contaOccorrenze(String testo, String sottostringa) {
         int contatore = 0;
         int indice = testo.indexOf(sottostringa);

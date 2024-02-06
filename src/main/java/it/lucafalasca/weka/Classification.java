@@ -3,22 +3,23 @@ package it.lucafalasca.weka;
 
 import it.lucafalasca.enumerations.EvaluationMetric;
 import it.lucafalasca.enumerations.Experiment;
+import java.util.Collections;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.CostMatrix;
+import weka.classifiers.Evaluation;
 import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.meta.FilteredClassifier;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.SelectedTag;
-import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.supervised.instance.Resample;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Classification {
     private Classification() {
@@ -29,7 +30,7 @@ public class Classification {
         classifier.buildClassifier(trainingSet);
         Evaluation evaluation = new Evaluation(testingSet);
         evaluation.evaluateModel(classifier, testingSet);
-        Map<EvaluationMetric, Double> ret = new HashMap<>();
+        Map<EvaluationMetric, Double> ret = new EnumMap<>(EvaluationMetric.class);
         ret.put(EvaluationMetric.AUC, evaluation.areaUnderROC(1));
         ret.put(EvaluationMetric.PRECISION, evaluation.precision(1));
         ret.put(EvaluationMetric.RECALL, evaluation.recall(1));
@@ -63,10 +64,8 @@ public class Classification {
                 csc.setClassifier(classifier);
                 return classify(trainingSet, testingSet, csc);
             }
-            default -> {
-                throw new IllegalArgumentException("Invalid experiment");
-            }
         }
+        return Collections.emptyMap();
     }
 
     private static CostMatrix getCostMatrix(double cfp, double cfn){

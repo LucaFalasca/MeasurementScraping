@@ -68,22 +68,6 @@ public class Repository {
         return githubDao.getTreeUrlFromDate(date);
     }
 
-    /*
-    public List<RepoFile> getClasses(String pathJsonFile) throws IOException {
-        if(classes == null) {
-            Gson gson = new Gson();
-            classes = new ArrayList<>();
-            JSONArray jsonArray = JsonReader.readJsonArrayFromFile(pathJsonFile);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String classJson = jsonArray.getJSONObject(i).toString();
-                RepoFile c = gson.fromJson(classJson, RepoFile.class);
-                classes.add(c);
-            }
-        }
-        return classes;
-    }
-     */
-
     public List<Commit> getCommits() throws IOException {
         if(commits == null)
             commits = githubDao.getCommits(null, finalDate);
