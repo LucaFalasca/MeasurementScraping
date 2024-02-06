@@ -1,6 +1,5 @@
 package it.lucafalasca.measurement;
 
-import it.lucafalasca.entities.ModFile;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.RepoFile;
 import it.lucafalasca.enumerations.Metric;
