@@ -7,6 +7,8 @@ import it.lucafalasca.entities.Release;
 import it.lucafalasca.enumerations.Project;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import java.util.List;
 
 public class JiraDao {
 
+    private static final Logger logger = LoggerFactory.getLogger(JiraDao.class);
     /*
      * The project we want to take data from
      */
@@ -76,7 +79,7 @@ public class JiraDao {
 
     public List<Ticket> getBugTickets(LocalDate startRelease, LocalDate endRelease) throws IOException {
         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%27" + project.toString() +"%27AND'issueType'='Bug'AND('status'='closed'OR'status'='resolved')AND'resolution'='fixed'&fields=key&maxResults=1000&fields=fixVersions,issuetype,resolutiondate,created,versions";
-        System.out.println(url);
+        logger.info(url);
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
         assert json != null;
         JSONArray issues = json.getJSONArray(ISSUES);
@@ -96,16 +99,16 @@ public class JiraDao {
 
     public static List<Ticket> getBugTickets(Project[] projects) throws IOException {
         String projectsString = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for(Project project : projects){
-            projectsString += project.toString() + ",";
+            stringBuilder.append(project.toString()).append(",");
         }
         projectsString = projectsString.substring(0, projectsString.length() - 1);
 
         int startAt = 0;
         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project%20in%20(" + projectsString + ")%20AND%20issuetype%20=%20Bug%20AND%20status%20in%20(Resolved,%20Closed)%20AND%20resolution%20in%20(Fixed,%20Done,%20Resolved)%20AND%20affectedVersion%20in%20releasedVersions()%20AND%20fixVersion%20in%20releasedVersions()%20%20&maxResults=1000&fields=fixVersions,issuetype,created,versions,project&startAt=" + startAt;
-        System.out.println(url);
+        logger.info(url);
         JSONObject json = JsonReader.readJsonFromUrl(url, false);
-        //System.out.println(json);
         assert json != null;
         String total = json.get("total").toString();
 
@@ -119,7 +122,6 @@ public class JiraDao {
         }
 
         for (int i = 1000; i < Integer.parseInt(total); i += 1000){
-            startAt = i;
             json = JsonReader.readJsonFromUrl(url, false);
             issues = json.getJSONArray(ISSUES);
             for(int j = 0; j < issues.length(); j++) {
@@ -127,7 +129,6 @@ public class JiraDao {
                 tickets.add(ticket);
             }
         }
-        //System.out.println(tickets);
         return tickets;
 
 

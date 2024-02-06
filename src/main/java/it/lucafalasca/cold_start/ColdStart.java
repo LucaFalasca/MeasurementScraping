@@ -6,22 +6,24 @@ import it.lucafalasca.entities.Fields;
 import it.lucafalasca.entities.Release;
 import it.lucafalasca.entities.Ticket;
 import it.lucafalasca.enumerations.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class ColdStart {
+    private ColdStart() {
+    }
 
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    private static Logger logger = LoggerFactory.getLogger(ColdStart.class);
     public static void coldStart() throws IOException {
         Project[] projects = Project.getAllProjects();
 
-        Map<Project, List<Release>> projectReleases = new HashMap<>();
+        Map<Project, List<Release>> projectReleases = new EnumMap<>(Project.class);
         for(Project project : projects){
             Repository repository = new Repository(project);
             List<Release> releases = repository.getReleases();
@@ -29,7 +31,7 @@ public class ColdStart {
         }
 
         List<Ticket> tickets = JiraDao.getBugTickets(projects);
-        System.out.println("Number of tickets: " + tickets.size());
+        logger.info("Number of tickets: {}", tickets.size());
         int c = 0;
         float sum = 0;
         for (Ticket ticket : tickets) {
@@ -40,16 +42,14 @@ public class ColdStart {
 
             List<Release> fixVersions = fields.getFixVersions();
             Release fixVersion = maxVersion(fixVersions);
-            if(fixVersion == null){
-                continue;
-            }
-            fixVersion.setVersionNumber(getVersionNumberFromRelease(projectReleases.get(project), fixVersion));
 
             List<Release> affectedVersions = fields.getVersions();
             Release injectedVersion = minVersion(affectedVersions);
-            if(injectedVersion == null){
+
+            if(fixVersion == null || injectedVersion == null){
                 continue;
             }
+            fixVersion.setVersionNumber(getVersionNumberFromRelease(projectReleases.get(project), fixVersion));
             injectedVersion.setVersionNumber(getVersionNumberFromRelease(projectReleases.get(project), injectedVersion));
 
 
@@ -63,14 +63,17 @@ public class ColdStart {
 
             if(!(fixVersionNumber <= openingVersionNumber || fixVersionNumber <= injectedVersionNumber || injectedVersionNumber > openingVersionNumber)){
                 c++;
-                float p = (fixVersionNumber - injectedVersionNumber)/(fixVersionNumber - openingVersionNumber);
+                float p = (float) (fixVersionNumber - injectedVersionNumber) /(fixVersionNumber - openingVersionNumber);
                 sum += p;
             }
         }
-        System.out.println("Number of tickets with right versions: " + c);
-        System.out.println("Number of tickets with wrong versions: " + (tickets.size() - c));
+        logger.info("Number of tickets with right versions: {}", c);
+        logger.info("Number of tickets with wrong versions: {}", (tickets.size() - c));
+        if(c == 0){
+            throw new IllegalArgumentException("No tickets with right versions");
+        }
         float mean = sum/c;
-        System.out.println("Mean: " + mean);
+        logger.info("Mean: {}", mean);
     }
 
     public static int getVersionNumberFromRelease(List<Release> releases, Release r) {

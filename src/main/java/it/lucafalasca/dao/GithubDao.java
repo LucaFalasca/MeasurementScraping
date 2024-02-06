@@ -8,6 +8,8 @@ import it.lucafalasca.entities.ModFile;
 import it.lucafalasca.enumerations.Project;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -20,7 +22,9 @@ public class GithubDao {
     private Project project;
     private Gson gson;
 
-    private final String GITHUB_URL = "https://api.github.com/repos/apache/";
+    private static final String GITHUB_URL = "https://api.github.com/repos/apache/";
+
+    private static final Logger logger = LoggerFactory.getLogger(GithubDao.class);
 
     public GithubDao(Project project) {
         this.project = project;
@@ -36,11 +40,13 @@ public class GithubDao {
         do {
             long startTime1 = System.currentTimeMillis();
             url = GITHUB_URL + project.toString() + "/commits?per_page=100&page=" + page;
-            System.out.println(url);
+            logger.info(url);
+            StringBuilder sb = new StringBuilder();
+            sb.append(url);
             if(startDate != null)
-                url += "&since=" + startDate.toString();
+                sb.append("&since=").append(startDate.toString());
             if(endDate != null){
-                url += "&until=" + endDate.toString();
+                sb.append("&until=").append(endDate.toString());
             }
             commitsJsonArray = JsonReader.readJsonArrayFromUrl(url, true);
             long endTime1 = System.currentTimeMillis();
@@ -52,18 +58,19 @@ public class GithubDao {
             }
             long endTime2 = System.currentTimeMillis();
             long elapsedTime2 = endTime2 - startTime2;
-            double totTime= elapsedTime1 + elapsedTime2;
-            tTot += totTime;
+            double totTime= (double)elapsedTime1 + elapsedTime2;
+            tTot += (long) totTime;
 
             DecimalFormat df = new DecimalFormat("#.##");
-
-            System.out.println("Pagina: " + page);
-            System.out.println("Tempo Query REST: " + elapsedTime1 + "ms (" + df.format(elapsedTime1/totTime*100) + "%)");
-            System.out.println("Conversione da Json a Oggetti: " + elapsedTime2 + " ms(" + df.format(elapsedTime2/totTime*100) + "%)");
-            System.out.println("Tempo totale: " + totTime);
+            String formattedTime1 = df.format(elapsedTime1/totTime*100);
+            String formattedTime2 = df.format(elapsedTime2/totTime*100);
+            logger.info("Pagina: {}", page);
+            logger.info("Tempo Query REST: {}ms ({}%)", elapsedTime1, formattedTime1);
+            logger.info("Conversione da Json a Oggetti: {} ms({}%)", elapsedTime2, formattedTime2);
+            logger.info("Tempo totale: {}", totTime);
             page++;
         }while(commitsJsonArray.length() == 100);
-        System.out.println("Tempo totale finale: " + tTot);
+        logger.info("Tempo totale finale: {}", tTot);
         return commits;
     }
 
@@ -94,55 +101,24 @@ public class GithubDao {
     }
 
     public List<RepoFile> getClasses(String url) throws IOException {
-        //String url = GITHUB_URL + project.toString() + "/git/trees/" + shaTree + "?recursive=1";
         long startTime = System.currentTimeMillis();
         url += "?recursive=1";
         JSONObject treeJsonObject = JsonReader.readJsonFromUrl(url, true);
         JSONArray treeJsonArray = treeJsonObject.getJSONArray("tree");
         List<RepoFile> javaClasses = new ArrayList<>();
-        System.out.println(treeJsonArray.length());
+        logger.info("{}", treeJsonArray.length());
         for (int i = 0; i < treeJsonArray.length(); i++) {
             JSONObject fileJsonObject = treeJsonArray.getJSONObject(i);
             RepoFile file = gson.fromJson(fileJsonObject.toString(), RepoFile.class);
-            if(file.getType().equals("tree")) {
-                //System.out.println("DIR:" + file.getPath());
-                //javaClasses.addAll(getClasses(file.getUrl()));
-
-            }
-            else if (file.getPath().endsWith(".java") &&
+            if (file.getPath().endsWith(".java") &&
                     !file.getPath().contains("Test") &&
                     !file.getPath().contains("package-info.java")) {
-                //System.out.println("Class Found:" + file.getPath());
                 javaClasses.add(file);
             }
         }
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        System.out.println("Tempo totale: " + elapsedTime);
+        logger.info("Tempo totale: {}", elapsedTime);
         return javaClasses;
     }
-
-    /*
-    private List<RepoFile> getClassesFromUrl(String url) throws IOException {
-        JSONArray filesJsonArray = JsonReader.readJsonArrayFromUrl(url, true);
-        List<RepoFile> javaClasses = new ArrayList<>();
-
-        for (int i = 0; i < filesJsonArray.length(); i++) {
-            JSONObject fileJsonObject = filesJsonArray.getJSONObject(i);
-            RepoFile file = gson.fromJson(fileJsonObject.toString(), RepoFile.class);
-            if(file.getType().equals("tree")) {
-                //System.out.println("DIR:" + file.getName());
-                javaClasses.addAll(getClasses(file.getUrl()));
-            }
-            else if (file.getName().endsWith(".java") &&
-                    !file.getName().contains("Test") &&
-                    !file.getName().contains("package-info.java")) {
-                //System.out.println("Class Found:" + file.getName());
-                javaClasses.add(file);
-            }
-        }
-        return javaClasses;
-    }
-     */
-
 }
